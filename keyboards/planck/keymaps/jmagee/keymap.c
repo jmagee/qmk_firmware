@@ -25,6 +25,7 @@ enum planck_layers {
   _NUMPAD,
   _SYMBOLS,
   _NAVI,
+  _MOUSER,
   _PLOVER,
   _ADJUST
 };
@@ -35,9 +36,11 @@ enum planck_keycodes {
   NUMPAD,
   SYMBOLS,
   NAVI,
+  MOUSER,
   PLOVER,
   BACKLIT,
-  EXT_PLV
+  EXT_PLV,
+  SQUEEK
 };
 
 /* Smart toggle - toggle layer on tap, momentarily activate on hold. */
@@ -146,6 +149,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
+/* Mouser.
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |  C3  |      |      |      |      |      |      |Leader|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |  C4  |  C1  |      |  <-  | Down | Up   |  ->  |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |  C2  |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_MOUSER] = {
+  {_______, _______, _______, _______, KC_BTN3, _______, _______, _______, _______, _______, _______, KC_LEAD},
+  {_______, SQUEEK , _______, KC_BTN4, KC_BTN1, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______},
+  {_______, _______, _______, _______, KC_BTN2, _______, _______, _______, _______, _______, _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
+},
+
 /* Plover layer (http://opensteno.org)
  * ,-----------------------------------------------------------------------------------.
  * |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
@@ -244,6 +265,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case _MOUSER:
+      if (record->event.pressed) {
+        layer_on(_MOUSER);
+      }
+      return false;
+      break;
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
@@ -287,6 +314,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case SQUEEK: {
+      /* Toggle through the mouse acceleration speeds. */
+      static const unsigned lookup[3] = { KC_ACL0, KC_ACL1, KC_ACL2 };
+      static uint8_t current = 0;
+      if (record->event.pressed) {
+        current = (current + 1) % 3;
+        register_code(lookup[current]);
+      }
+      return false;
+      break;
+    }
   }
   return true;
 }
