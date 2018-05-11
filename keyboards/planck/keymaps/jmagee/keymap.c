@@ -40,6 +40,12 @@ enum planck_keycodes {
   EXT_PLV
 };
 
+/* Smart toggle - toggle layer on tap, momentarily activate on hold. */
+#define ST(layer, layer_code) LT(layer, layer_code)
+#define T_NUMPAD ST(_NUMPAD, NUMPAD)
+#define T_SYM    ST(_SYMBOLS, SYMBOLS)
+#define T_NAVI   ST(_NAVI, NAVI)
+
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
@@ -53,14 +59,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |NumPad| Sym  | GUI  | Alt  |Space | Tab  |Bksp  |Enter | Comp |      |      |      |
+ * |NumPad| Sym  | GUI  | Alt  |Space | Tab  |Bksp  |Enter | Comp | Navi |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = {
   {_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD},
   {KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
   {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______},
-  {NUMPAD , SYMBOLS, KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  _______, _______, _______, _______}
+  {T_NUMPAD,T_SYM  , KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  T_NAVI , _______, _______, _______}
 },
 
 /* Al Bhed
@@ -78,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {QWERTY , KC_X,    KC_F,    KC_A,    KC_N,    KC_D,    KC_O,    KC_I,    KC_E,    KC_U,    KC_B,    KC_LEAD},
   {KC_ESC,  KC_Y,    KC_C,    KC_T,    KC_V,    KC_K,    KC_R,    KC_Z,    KC_G,    KC_M,    KC_SCLN, KC_QUOT},
   {KC_LSFT, KC_W,    KC_Q,    KC_L,    KC_J,    KC_P,    KC_H,    KC_S,    KC_COMM, KC_DOT,  KC_SLSH, _______},
-  {NUMPAD , SYMBOLS, KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  _______, _______, _______, _______}
+  {T_NUMPAD,T_SYM  , KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  _______, _______, _______, _______}
 },
 
 /* Numpad
@@ -173,8 +179,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 }
-
-
 };
 
 #ifdef AUDIO_ENABLE
@@ -212,6 +216,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
 #endif
+    case ALBHED:
+      if (record->event.pressed) {
+        print("Famlusa\n");
+        layer_on(_ALBHED);
+      }
+      return false;
+      break;
+    case NUMPAD:
+      if (record->event.pressed) {
+        layer_on(_NUMPAD);
+      }
+      return false;
+      break;
+    case _SYMBOLS:
+      if (record->event.pressed) {
+        layer_on(_SYMBOLS);
+      }
+      return false;
+      break;
+    case _NAVI:
+      if (record->event.pressed) {
+        layer_on(_NAVI);
+      }
+      return false;
+      break;
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
