@@ -27,54 +27,15 @@ typedef enum {
   _SYMBOLS,
   _NAVI,
   _MOUSER,
-  _MAX_LAYER
+  _MAX_LAYER      /* Not an actual layer; must appear last in the enum. */
 } Planck_layers;
 
+/* Types to manage layer state. */
 typedef enum {
   Layer_off = 0,
   Layer_on,
   Layer_persistant
 } Layer_state;
-
-static void transient_layers_off(Layer_state layer_map[_MAX_LAYER]) {
-  for (Planck_layers i = 0; i < _MAX_LAYER; ++i) {
-    if (layer_map[i] == Layer_on) {
-      layer_map[i] = Layer_off;
-      layer_off(i);
-    }
-  }
-}
-
-static void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Planck_layers layer) {
-  transient_layers_off(layer_map);
-  layer_on(layer);
-  layer_map[layer] = Layer_on;
-}
-
-static void activate_layer(Planck_layers layer) {
-  static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
-  switch (layer) {
-    case _QWERTY:
-      print("mode just switched to qwerty and this is a huge string\n");
-      set_single_persistent_default_layer(_QWERTY);
-      layer_map[_QWERTY] = Layer_persistant;
-      return;
-    case _ALBHED:
-      print("Famlusa\n");
-      switch_transient_layer(layer_map, _ALBHED);
-      return;
-    case _NUMPAD:
-    case _SYMBOLS:
-    case _NAVI:
-    case _MOUSER:
-      switch_transient_layer(layer_map, layer);
-      return;
-    case _MAX_LAYER:
-      assert(0 && "_MAX_LAYER cannot be activated.");
-      return;
-  }
-  assert(0 && "Unreachable!");
-}
 
 typedef enum {
   QWERTY = SAFE_RANGE,
@@ -93,15 +54,6 @@ _Static_assert(SYMBOLS - SAFE_RANGE == _SYMBOLS, "Keycode cannot be converted to
 _Static_assert(NAVI - SAFE_RANGE == _NAVI, "Keycode cannot be converted to layer.");
 _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to layer.");
 
-static bool is_layer_keycode(Planck_keycodes kc) {
-  return kc >= QWERTY && kc <= MOUSER;
-}
-
-static Planck_layers keycode_to_layer(Planck_keycodes kc) {
-  assert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
-  return kc - SAFE_RANGE;
-}
-
 /* Smart toggle - toggle layer on tap, momentarily activate on hold. */
 #define ST(layer, layer_code) LT(layer, layer_code)
 #define T_NUMPAD ST(_NUMPAD, NUMPAD)
@@ -110,9 +62,6 @@ static Planck_layers keycode_to_layer(Planck_keycodes kc) {
 
 /* Escape on tap, control on hold.*/
 #define ESCTRL   CTL_T(KC_ESC)
-
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
 
 /* NKRO Control */
 typedef enum {
@@ -234,6 +183,59 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 },
 };
 
+/* Turn off all transient layers.
+ * A transient layer is just a non-persistant layer.
+ * Only one transient layer can be enabled at a time. */
+static void transient_layers_off(Layer_state layer_map[_MAX_LAYER]) {
+  for (Planck_layers i = 0; i < _MAX_LAYER; ++i) {
+    if (layer_map[i] == Layer_on) {
+      layer_map[i] = Layer_off;
+      layer_off(i);
+    }
+  }
+}
+
+/* Switch from one transient layer to another.  This is essentially a mode switch. */
+static void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Planck_layers layer) {
+  transient_layers_off(layer_map);
+  layer_on(layer);
+  layer_map[layer] = Layer_on;
+}
+
+/* Activate a layer. */
+static void activate_layer(Planck_layers layer) {
+  static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
+  switch (layer) {
+    case _QWERTY:
+      print("mode just switched to qwerty and this is a huge string\n");
+      set_single_persistent_default_layer(_QWERTY);
+      layer_map[_QWERTY] = Layer_persistant;
+      return;
+    case _ALBHED:
+      print("Famlusa\n");
+      switch_transient_layer(layer_map, _ALBHED);
+      return;
+    case _NUMPAD:
+    case _SYMBOLS:
+    case _NAVI:
+    case _MOUSER:
+      switch_transient_layer(layer_map, layer);
+      return;
+    case _MAX_LAYER:
+      assert(0 && "_MAX_LAYER cannot be activated.");
+      return;
+  }
+  assert(0 && "Unreachable!");
+}
+
+static bool is_layer_keycode(Planck_keycodes kc) {
+  return kc >= QWERTY && kc <= MOUSER;
+}
+
+static Planck_layers keycode_to_layer(Planck_keycodes kc) {
+  assert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
+  return kc - SAFE_RANGE;
+}
 
 uint32_t layer_state_set_user(uint32_t state) {
   return state;
@@ -328,11 +330,6 @@ void matrix_scan_user(void) {
 
 bool music_mask_user(uint16_t keycode) {
   switch (keycode) {
-#if 0
-    case RAISE:
-    case LOWER:
-      return false;
-#endif
     default:
       return true;
   }
