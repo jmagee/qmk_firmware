@@ -65,8 +65,8 @@ _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to l
 
 /* NKRO Control */
 typedef enum {
-  NK_ENABLE = 0,
-  NK_DISABLE,
+  NK_DISABLE = 0,
+  NK_ENABLE,
   NK_TOGGLE
 } NK_Control;
 
