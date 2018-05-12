@@ -65,4 +65,7 @@
  * will accelerate. */
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 40
 
+/* Leader key settings */
+#define LEADER_TIMEOUT 300
+
 #endif
