@@ -20,11 +20,6 @@
 
 extern keymap_config_t keymap_config;
 
-#ifdef AUDIO_ENABLE
-  float plover_song[][2]     = SONG(PLOVER_SOUND);
-  float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
-#endif
-
 typedef enum {
   _QWERTY = 0,
   _ALBHED,
@@ -32,7 +27,6 @@ typedef enum {
   _SYMBOLS,
   _NAVI,
   _MOUSER,
-  _PLOVER,
   _MAX_LAYER
 } Planck_layers;
 
@@ -75,14 +69,6 @@ static void activate_layer(Planck_layers layer) {
     case _MOUSER:
       switch_transient_layer(layer_map, layer);
       return;
-    case _PLOVER:
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(plover_song);
-      #endif
-      /*enable_nkro(NK_ENABLE);*/
-      switch_transient_layer(layer_map, layer);
-      return;
     case _MAX_LAYER:
       assert(0 && "_MAX_LAYER cannot be activated.");
       return;
@@ -97,9 +83,6 @@ typedef enum {
   SYMBOLS,
   NAVI,
   MOUSER,
-  PLOVER,
-  BACKLIT,
-  EXT_PLV,
   SQUEEK
 } Planck_keycodes;
 
@@ -111,11 +94,11 @@ _Static_assert(NAVI - SAFE_RANGE == _NAVI, "Keycode cannot be converted to layer
 _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to layer.");
 
 static bool is_layer_keycode(Planck_keycodes kc) {
-  return kc >= QWERTY && kc <= PLOVER;
+  return kc >= QWERTY && kc <= MOUSER;
 }
 
 static Planck_layers keycode_to_layer(Planck_keycodes kc) {
-  assert(kc <= PLOVER && "Keycode cannot be converetd to layer");
+  assert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
   return kc - SAFE_RANGE;
 }
 
@@ -249,25 +232,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, _______, _______, _______, KC_BTN2, _______, _______, _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
-
-/* Plover layer (http://opensteno.org)
- * ,-----------------------------------------------------------------------------------.
- * |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit |      |      |   A  |   O  |             |   E  |   U  |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-[_PLOVER] = {
-  {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-  {XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-  {XXXXXXX, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-  {EXT_PLV, XXXXXXX, XXXXXXX, KC_C,    KC_V,    XXXXXXX, XXXXXXX, KC_N,    KC_M,    XXXXXXX, XXXXXXX, XXXXXXX}
-},
 };
 
 
@@ -295,7 +259,6 @@ static void enable_nkro(NK_Control mode) {
       keymap_config.nkro = !keymap_config.nkro;
       break;
   }
-
   eeconfig_update_keymap(keymap_config.raw);
 }
 
@@ -308,26 +271,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case BACKLIT:
-      if (record->event.pressed) {
-        register_code(KC_RSFT);
-        #ifdef BACKLIGHT_ENABLE
-          backlight_step();
-        #endif
-        PORTE &= ~(1<<6);
-      } else {
-        unregister_code(KC_RSFT);
-        PORTE |= (1<<6);
-      }
-      return false;
-    case EXT_PLV:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(plover_gb_song);
-        #endif
-        layer_off(_PLOVER);
-      }
-      return false;
     case SQUEEK: {
       /* Toggle through the mouse acceleration speeds. */
       static const uint8_t lookup[3] = { KC_ACL0, KC_ACL1, KC_ACL2 };
