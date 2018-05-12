@@ -16,21 +16,81 @@
 
 #include "planck.h"
 #include "action_layer.h"
+#include <assert.h>
 
 extern keymap_config_t keymap_config;
 
-enum planck_layers {
-  _QWERTY,
+#ifdef AUDIO_ENABLE
+  float plover_song[][2]     = SONG(PLOVER_SOUND);
+  float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
+#endif
+
+typedef enum {
+  _QWERTY = 0,
   _ALBHED,
   _NUMPAD,
   _SYMBOLS,
   _NAVI,
   _MOUSER,
   _PLOVER,
-  _ADJUST
-};
+  _MAX_LAYER
+} Planck_layers;
 
-enum planck_keycodes {
+typedef enum {
+  Layer_off = 0,
+  Layer_on,
+  Layer_persistant
+} Layer_state;
+
+static void transient_layers_off(Layer_state layer_map[_MAX_LAYER]) {
+  for (Planck_layers i = 0; i < _MAX_LAYER; ++i) {
+    if (layer_map[i] == Layer_on) {
+      layer_map[i] = Layer_off;
+      layer_off(i);
+    }
+  }
+}
+
+static void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Planck_layers layer) {
+  transient_layers_off(layer_map);
+  layer_on(layer);
+  layer_map[layer] = Layer_on;
+}
+
+static void activate_layer(Planck_layers layer) {
+  static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
+  switch (layer) {
+    case _QWERTY:
+      print("mode just switched to qwerty and this is a huge string\n");
+      set_single_persistent_default_layer(_QWERTY);
+      layer_map[_QWERTY] = Layer_persistant;
+      return;
+    case _ALBHED:
+      print("Famlusa\n");
+      switch_transient_layer(layer_map, _ALBHED);
+      return;
+    case _NUMPAD:
+    case _SYMBOLS:
+    case _NAVI:
+    case _MOUSER:
+      switch_transient_layer(layer_map, layer);
+      return;
+    case _PLOVER:
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(plover_song);
+      #endif
+      /*enable_nkro(NK_ENABLE);*/
+      switch_transient_layer(layer_map, layer);
+      return;
+    case _MAX_LAYER:
+      assert(0 && "_MAX_LAYER cannot be activated.");
+      return;
+  }
+  assert(0 && "Unreachable!");
+}
+
+typedef enum {
   QWERTY = SAFE_RANGE,
   ALBHED,
   NUMPAD,
@@ -41,7 +101,23 @@ enum planck_keycodes {
   BACKLIT,
   EXT_PLV,
   SQUEEK
-};
+} Planck_keycodes;
+
+_Static_assert(QWERTY - SAFE_RANGE == _QWERTY, "Keycode cannot be converted to layer.");
+_Static_assert(ALBHED - SAFE_RANGE == _ALBHED, "Keycode cannot be converted to layer.");
+_Static_assert(NUMPAD - SAFE_RANGE == _NUMPAD, "Keycode cannot be converted to layer.");
+_Static_assert(SYMBOLS - SAFE_RANGE == _SYMBOLS, "Keycode cannot be converted to layer.");
+_Static_assert(NAVI - SAFE_RANGE == _NAVI, "Keycode cannot be converted to layer.");
+_Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to layer.");
+
+static bool is_layer_keycode(Planck_keycodes kc) {
+  return kc >= QWERTY && kc <= PLOVER;
+}
+
+static Planck_layers keycode_to_layer(Planck_keycodes kc) {
+  assert(kc <= PLOVER && "Keycode cannot be converetd to layer");
+  return kc - SAFE_RANGE;
+}
 
 /* Smart toggle - toggle layer on tap, momentarily activate on hold. */
 #define ST(layer, layer_code) LT(layer, layer_code)
@@ -192,30 +268,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {XXXXXXX, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
   {EXT_PLV, XXXXXXX, XXXXXXX, KC_C,    KC_V,    XXXXXXX, XXXXXXX, KC_N,    KC_M,    XXXXXXX, XXXXXXX, XXXXXXX}
 },
-
-/* Adjust (Lower + Raise)
- * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|Plover|      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_ADJUST] = {
-  {_______, RESET,   DEBUG,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL },
-  {_______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______, PLOVER,  _______},
-  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
-}
 };
 
-#ifdef AUDIO_ENABLE
-  float plover_song[][2]     = SONG(PLOVER_SOUND);
-  float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
-#endif
 
 uint32_t layer_state_set_user(uint32_t state) {
   return state;
@@ -246,59 +300,14 @@ static void enable_nkro(NK_Control mode) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (is_layer_keycode(keycode)) {
+    if (record->event.pressed) {
+      activate_layer(keycode_to_layer(keycode));
+      return false;
+    }
+  }
+
   switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        print("mode just switched to qwerty and this is a huge string\n");
-        set_single_persistent_default_layer(_QWERTY);
-      }
-      return false;
-      break;
-#if 0
-    case COLEMAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case DVORAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_DVORAK);
-      }
-      return false;
-      break;
-#endif
-    case ALBHED:
-      if (record->event.pressed) {
-        print("Famlusa\n");
-        layer_on(_ALBHED);
-      }
-      return false;
-      break;
-    case NUMPAD:
-      if (record->event.pressed) {
-        layer_on(_NUMPAD);
-      }
-      return false;
-      break;
-    case _SYMBOLS:
-      if (record->event.pressed) {
-        layer_on(_SYMBOLS);
-      }
-      return false;
-      break;
-    case _NAVI:
-      if (record->event.pressed) {
-        layer_on(_NAVI);
-      }
-      return false;
-      break;
-    case _MOUSER:
-      if (record->event.pressed) {
-        layer_on(_MOUSER);
-      }
-      return false;
-      break;
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
@@ -311,23 +320,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         PORTE |= (1<<6);
       }
       return false;
-      break;
-    case PLOVER:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          stop_all_notes();
-          PLAY_SONG(plover_song);
-        #endif
-#if 0
-        layer_off(_RAISE);
-        layer_off(_LOWER);
-        layer_off(_ADJUST);
-#endif
-        layer_on(_PLOVER);
-        enable_nkro(NK_ENABLE);
-      }
-      return false;
-      break;
     case EXT_PLV:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
@@ -336,17 +328,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_PLOVER);
       }
       return false;
-      break;
     case SQUEEK: {
       /* Toggle through the mouse acceleration speeds. */
       static const uint8_t lookup[3] = { KC_ACL0, KC_ACL1, KC_ACL2 };
       static uint8_t current = 0;
       if (record->event.pressed) {
-        current = (current + 1) % 3;
+        ++current;
+        if (current > 2) {
+          current = 0;
+        }
         register_code(lookup[current]);
       }
       return false;
-      break;
     }
   }
   return true;
