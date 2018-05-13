@@ -46,6 +46,17 @@ LEADER_EXTERNS();
   unregister_code(mod1); \
 } while (0);
 
+#define CHORD4(mod1, mod2, mod3, key) do { \
+  register_code(mod1); \
+  register_code(mod2); \
+  register_code(mod3); \
+  register_code(key); \
+  unregister_code(key); \
+  unregister_code(mod3); \
+  unregister_code(mod2); \
+  unregister_code(mod1); \
+} while (0);
+
 /* leader_fkeys - Create leader mappings for each function key (f1 - f24)
  * corrosponding to a virtual numpad on a QWERTY layout.  Logically,
  * leader f 1 -> F1
@@ -71,5 +82,10 @@ void leader_ctrl_alt_del(void);
  * in Linux.  E.g. Ctrl+Alt+F1 - Ctrll+Alt+F12.
  */
 void leader_virtual_consoles(void);
+
+/* leader_xmonad - Create leader mappings for xmonad chords.
+ * The mappings are not complete - only those that I commonly want to use
+ * as leader mappings are here. */
+void leader_xmonad(void);
 
 #endif // JMAGEE_LEADER_H

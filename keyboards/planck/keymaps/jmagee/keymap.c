@@ -174,6 +174,7 @@ void matrix_scan_user(void) {
     leader_fkeys();
     leader_ctrl_alt_del();
     leader_virtual_consoles();
+    leader_xmonad();
 
     SEQ_ONE_KEY(KC_N) {
       enable_nkro(NK_TOGGLE);

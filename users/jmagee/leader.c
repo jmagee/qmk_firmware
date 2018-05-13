@@ -16,8 +16,6 @@
 
 #include "leader.h"
 
-
-
 enum { N_FKEYS = 24 };
 static const uint8_t fkeys[N_FKEYS] = {
   KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10,
@@ -30,7 +28,11 @@ static const uint8_t digits[10] = {
   KC_N, KC_M, KC_COMM, KC_DOT, KC_J, KC_K, KC_L, KC_U, KC_I, KC_O
 };
 
-/* Helper to map F-key based sequences to a virtual numpad. */
+/* Helper to map F-key based sequences to a virtual numpad.
+ * leader_seq is simply a keycode.
+ * mapping is a function that accepts a keycode argument (one of the
+ * F keys) and does something with it (e.g. register keypress events)
+ * */
 #define f1_to_vnumpad(leading_seq, mapping)   do { \
   uint8_t f = 0; \
   \
@@ -71,4 +73,51 @@ void leader_virtual_consoles(void) {
   } while (0);
 
   f1_to_vnumpad(KC_V, vkey_map);
+}
+
+void leader_xmonad(void) {
+  /* launch a terminal */
+  SEQ_TWO_KEYS(KC_X, KC_ENT) {
+    CHORD3(KC_LALT, KC_LSFT, KC_ENT);
+  }
+
+  /* launch a dmenu */
+  SEQ_TWO_KEYS(KC_X, KC_P) {
+    CHORD2(KC_LALT, KC_P);
+  }
+
+  /* lock the screen */
+  SEQ_TWO_KEYS(KC_X, KC_X) {
+    CHORD2(KC_LALT, KC_X);
+  }
+
+  /* close window */
+  SEQ_TWO_KEYS(KC_X, KC_C) {
+    CHORD2(KC_LALT, KC_C);
+  }
+
+  /* cycle layout */
+  SEQ_TWO_KEYS(KC_X, KC_SPC) {
+    CHORD2(KC_LALT, KC_SPC);
+  }
+
+  /* Toggle the status bar (e.g. xmobar or similiar) */
+  SEQ_TWO_KEYS(KC_X, KC_B) {
+    CHORD2(KC_LALT, KC_B);
+  }
+
+  /* Start a pomodoro */
+  SEQ_TWO_KEYS(KC_X, KC_D) {
+    CHORD2(KC_LALT, KC_B);
+  }
+
+  /* quit */
+  SEQ_TWO_KEYS(KC_X, KC_Q) {
+    CHORD4(KC_LALT, KC_LSFT, KC_LCTL, KC_Q);
+  }
+
+  /* restart */
+  SEQ_TWO_KEYS(KC_X, KC_R) {
+    CHORD3(KC_LALT, KC_LSFT, KC_Q);
+  }
 }
