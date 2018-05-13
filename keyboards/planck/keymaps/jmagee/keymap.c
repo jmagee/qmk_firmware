@@ -159,7 +159,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (current > 2) {
           current = 0;
         }
-        register_code(lookup[current]);
+        CHORD1(lookup[current]);
       }
       return false;
     }
@@ -173,6 +173,7 @@ void matrix_scan_user(void) {
     leader_end();
     leader_fkeys();
     leader_ctrl_alt_del();
+    leader_virtual_consoles();
 
     SEQ_ONE_KEY(KC_N) {
       enable_nkro(NK_TOGGLE);
