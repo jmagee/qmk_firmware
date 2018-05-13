@@ -22,12 +22,24 @@
 LEADER_EXTERNS();
 
 /* leader_fkeys - Create leader mappings for each function key (f1 - f24)
- * corrosponding to a QWERTY layout, starting at Q.  Thus
- * leader f q -> F1
- * leader f w -> F2
+ * corrosponding to a virtual numpad on a QWERTY layout.  Logically,
+ * leader f 1 -> F1
+ * leader f 2 -> F2
  * ...
- * leader f v -> F24
+ * leader f 2 4 -> F24
+ *
+ * Where the virtual numpad are keys:
+ *   uio
+ *   jkl
+ *   m,.
+ *
+ * Thus 'leader f m k' would be F15.
  */
 void leader_fkeys(void);
+
+/* leader_ctrl_alt_del - Create a leader mapping for ctrl-alt-del.
+ * leader c a d
+ */
+void leader_ctrl_alt_del(void);
 
 #endif // JMAGEE_LEADER_H

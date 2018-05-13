@@ -296,6 +296,7 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
     leader_fkeys();
+    leader_ctrl_alt_del();
 
     SEQ_ONE_KEY(KC_N) {
       enable_nkro(NK_TOGGLE);
