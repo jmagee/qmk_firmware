@@ -17,6 +17,7 @@
 #include "planck.h"
 #include "action_layer.h"
 #include "leader.h"
+#include "nkro.h"
 #include <assert.h>
 
 extern keymap_config_t keymap_config;
@@ -63,13 +64,6 @@ _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to l
 
 /* Escape on tap, control on hold.*/
 #define ESCTRL   CTL_T(KC_ESC)
-
-/* NKRO Control */
-typedef enum {
-  NK_DISABLE = 0,
-  NK_ENABLE,
-  NK_TOGGLE
-} NK_Control;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -243,26 +237,6 @@ uint32_t layer_state_set_user(uint32_t state) {
 #if 0
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 #endif
-}
-
-/* enable_nkro - Turn on, off, or toggle NKRO. */
-static void enable_nkro(NK_Control mode) {
-  if (!eeconfig_is_enabled()) {
-    eeconfig_init();
-  }
-  keymap_config.raw = eeconfig_read_keymap();
-  switch (mode) {
-    case NK_ENABLE:
-      keymap_config.nkro = true;
-      break;
-    case NK_DISABLE:
-      keymap_config.nkro = false;
-      break;
-    case NK_TOGGLE:
-      keymap_config.nkro = !keymap_config.nkro;
-      break;
-  }
-  eeconfig_update_keymap(keymap_config.raw);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
