@@ -53,6 +53,19 @@ _Static_assert(SYMBOLS - SAFE_RANGE == _SYMBOLS, "Keycode cannot be converted to
 _Static_assert(NAVI - SAFE_RANGE == _NAVI, "Keycode cannot be converted to layer.");
 _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to layer.");
 
+/* Smart toggle - toggle layer on tap, momentarily activate on hold. */
+#define ST(layer, layer_code) LT(layer, layer_code)
+
+/* Smart toggles for specific layout / keycode combos. */
+#define T_NUMPAD ST(_NUMPAD, NUMPAD)
+#define T_SYM    ST(_SYMBOLS, SYMBOLS)
+#define T_NAVI   ST(_NAVI, NAVI)
+#define T_MOUSE  ST(_MOUSER, MOUSER)
+#define T_BHED   ST(_ALBHED, ALBHED)
+
+/* Escape on tap, control on hold.*/
+#define ESCTRL   CTL_T(KC_ESC)
+
 /* Turn off all transient layers.
  * A transient layer is just a non-persistant layer.
  * Only one transient layer can be enabled at a time. */

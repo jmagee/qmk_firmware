@@ -21,17 +21,6 @@
 #include "nkro.h"
 #include <assert.h>
 
-extern keymap_config_t keymap_config;
-
-/* Smart toggle - toggle layer on tap, momentarily activate on hold. */
-#define ST(layer, layer_code) LT(layer, layer_code)
-#define T_NUMPAD ST(_NUMPAD, NUMPAD)
-#define T_SYM    ST(_SYMBOLS, SYMBOLS)
-#define T_NAVI   ST(_NAVI, NAVI)
-
-/* Escape on tap, control on hold.*/
-#define ESCTRL   CTL_T(KC_ESC)
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -42,14 +31,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |NumPad| Sym  | GUI  | Alt  |Space | Tab  |Bksp  |Enter | Comp | Navi |      |      |
+ * |NumPad| Sym  | GUI  | Alt  |Space | Tab  |Bksp  |Enter | Comp | Navi |Mouser|AlBhed|
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = {
   {QWERTY , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD},
   {ESCTRL,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
   {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______},
-  {T_NUMPAD,T_SYM  , KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  T_NAVI , _______, _______, _______}
+  {T_NUMPAD,T_SYM  , KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  T_NAVI , T_MOUSE, _______, T_BHED }
 },
 
 /* Al Bhed
