@@ -1,3 +1,3 @@
-SRC += leader.c nkro.c
+SRC += leader.c nkro.c layers.c
 
 EXTRAFLAGS += -flto

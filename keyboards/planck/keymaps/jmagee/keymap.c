@@ -16,45 +16,12 @@
 
 #include "planck.h"
 #include "action_layer.h"
+#include "layers.h"
 #include "leader.h"
 #include "nkro.h"
 #include <assert.h>
 
 extern keymap_config_t keymap_config;
-
-typedef enum {
-  _QWERTY = 0,
-  _ALBHED,
-  _NUMPAD,
-  _SYMBOLS,
-  _NAVI,
-  _MOUSER,
-  _MAX_LAYER      /* Not an actual layer; must appear last in the enum. */
-} Planck_layers;
-
-/* Types to manage layer state. */
-typedef enum {
-  Layer_off = 0,
-  Layer_on,
-  Layer_persistant
-} Layer_state;
-
-typedef enum {
-  QWERTY = SAFE_RANGE,
-  ALBHED,
-  NUMPAD,
-  SYMBOLS,
-  NAVI,
-  MOUSER,
-  SQUEEK
-} Planck_keycodes;
-
-_Static_assert(QWERTY - SAFE_RANGE == _QWERTY, "Keycode cannot be converted to layer.");
-_Static_assert(ALBHED - SAFE_RANGE == _ALBHED, "Keycode cannot be converted to layer.");
-_Static_assert(NUMPAD - SAFE_RANGE == _NUMPAD, "Keycode cannot be converted to layer.");
-_Static_assert(SYMBOLS - SAFE_RANGE == _SYMBOLS, "Keycode cannot be converted to layer.");
-_Static_assert(NAVI - SAFE_RANGE == _NAVI, "Keycode cannot be converted to layer.");
-_Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to layer.");
 
 /* Smart toggle - toggle layer on tap, momentarily activate on hold. */
 #define ST(layer, layer_code) LT(layer, layer_code)
@@ -177,60 +144,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 };
-
-/* Turn off all transient layers.
- * A transient layer is just a non-persistant layer.
- * Only one transient layer can be enabled at a time. */
-static void transient_layers_off(Layer_state layer_map[_MAX_LAYER]) {
-  for (Planck_layers i = 0; i < _MAX_LAYER; ++i) {
-    if (layer_map[i] == Layer_on) {
-      layer_map[i] = Layer_off;
-      layer_off(i);
-    }
-  }
-}
-
-/* Switch from one transient layer to another.  This is essentially a mode switch. */
-static void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Planck_layers layer) {
-  transient_layers_off(layer_map);
-  layer_on(layer);
-  layer_map[layer] = Layer_on;
-}
-
-/* Activate a layer. */
-static void activate_layer(Planck_layers layer) {
-  static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
-  switch (layer) {
-    case _QWERTY:
-      print("mode just switched to qwerty and this is a huge string\n");
-      set_single_persistent_default_layer(_QWERTY);
-      layer_map[_QWERTY] = Layer_persistant;
-      return;
-    case _ALBHED:
-      print("Famlusa\n");
-      switch_transient_layer(layer_map, _ALBHED);
-      return;
-    case _NUMPAD:
-    case _SYMBOLS:
-    case _NAVI:
-    case _MOUSER:
-      switch_transient_layer(layer_map, layer);
-      return;
-    case _MAX_LAYER:
-      assert(0 && "_MAX_LAYER cannot be activated.");
-      return;
-  }
-  assert(0 && "Unreachable!");
-}
-
-static bool is_layer_keycode(Planck_keycodes kc) {
-  return kc >= QWERTY && kc <= MOUSER;
-}
-
-static Planck_layers keycode_to_layer(Planck_keycodes kc) {
-  assert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
-  return kc - SAFE_RANGE;
-}
 
 uint32_t layer_state_set_user(uint32_t state) {
   return state;
