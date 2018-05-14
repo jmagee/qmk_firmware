@@ -68,4 +68,6 @@
 /* Leader key settings */
 #define LEADER_TIMEOUT 300
 
+/* #define AUDIO_CLICKY */
+
 #endif
