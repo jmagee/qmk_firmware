@@ -88,4 +88,7 @@ void leader_virtual_consoles(void);
  * as leader mappings are here. */
 void leader_xmonad(void);
 
+/* Ssshh - its a secret. */
+void leader_secret(void);
+
 #endif // JMAGEE_LEADER_H

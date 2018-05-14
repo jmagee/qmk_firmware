@@ -16,14 +16,26 @@
 
 #include "leader.h"
 
+#if (__has_include("secrets.h") && !defined(NO_SECRETS))
+#include "secrets.h"
+#else
+PROGMEM const char secrets[][32] = { "a" };
+#endif
+
+enum {
+  SECRET_1 = 0,
+  SECRET_2,
+  SECRET_3
+};
+
 enum { N_FKEYS = 24 };
-static const uint8_t fkeys[N_FKEYS] = {
+PROGMEM static const uint8_t fkeys[N_FKEYS] = {
   KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10,
   KC_F11, KC_F12, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20,
   KC_F21, KC_F22, KC_F23, KC_F24
 };
 
-static const uint8_t digits[10] = {
+PROGMEM static const uint8_t digits[10] = {
   /* 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 on QWERTY layer */
   KC_N, KC_M, KC_COMM, KC_DOT, KC_J, KC_K, KC_L, KC_U, KC_I, KC_O
 };
@@ -119,5 +131,19 @@ void leader_xmonad(void) {
   /* restart */
   SEQ_TWO_KEYS(KC_X, KC_R) {
     CHORD3(KC_LALT, KC_LSFT, KC_Q);
+  }
+}
+
+void leader_secret(void) {
+  SEQ_TWO_KEYS(KC_S, KC_W) {
+    send_string_P(secrets[SECRET_1]);
+  }
+
+  SEQ_TWO_KEYS(KC_S, KC_D) {
+    send_string_P(secrets[SECRET_2]);
+  }
+
+  SEQ_TWO_KEYS(KC_S, KC_S) {
+    send_string_P(secrets[SECRET_3]);
   }
 }
