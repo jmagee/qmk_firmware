@@ -91,4 +91,7 @@ void leader_xmonad(void);
 /* Ssshh - its a secret. */
 void leader_secret(void);
 
+/* Utility  - various utility leader mappings. */
+void leader_utility(void);
+
 #endif // JMAGEE_LEADER_H

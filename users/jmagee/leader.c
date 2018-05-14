@@ -147,3 +147,10 @@ void leader_secret(void) {
     send_string_P(secrets[SECRET_3]);
   }
 }
+
+void leader_utility(void) {
+  SEQ_FIVE_KEYS(KC_F, KC_L, KC_A, KC_S, KC_H) {
+    register_code16(RESET);
+    unregister_code16(RESET);
+  }
+}
