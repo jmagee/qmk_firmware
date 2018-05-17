@@ -3,7 +3,7 @@
 
 Vagrant.configure(2) do |config|
   # VMware/Virtualbox 64 bit
-  config.vm.box = "phusion/ubuntu-14.04-amd64"
+  config.vm.box = "ubuntu/bionic64"
 
   # This section allows you to customize the Virtualbox VM
   # settings, ie showing the GUI or upping the memory
