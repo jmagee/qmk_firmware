@@ -18,6 +18,7 @@
 #include "action_layer.h"
 #include "layers.h"
 #include "leader.h"
+#include "mouse.h"
 #include "nkro.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -142,19 +143,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case SQUEEK: {
+    case SQUEEK:
       /* Toggle through the mouse acceleration speeds. */
-      static const uint8_t lookup[3] = { KC_ACL0, KC_ACL1, KC_ACL2 };
-      static uint8_t current = 0;
       if (record->event.pressed) {
-        ++current;
-        if (current > 2) {
-          current = 0;
-        }
-        CHORD1(lookup[current]);
+        squeek();
       }
       return false;
-    }
   }
   return true;
 }
