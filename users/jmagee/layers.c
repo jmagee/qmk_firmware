@@ -15,7 +15,7 @@
  */
 
 #include "layers.h"
-#include <assert.h>
+#include "passert.h"
 #include <quantum.h>
 
 void transient_layers_off(Layer_state layer_map[_MAX_LAYER]) {
@@ -52,10 +52,10 @@ void activate_layer(Layers layer) {
       switch_transient_layer(layer_map, layer);
       return;
     case _MAX_LAYER:
-      assert(0 && "_MAX_LAYER cannot be activated.");
+      passert(0 && "_MAX_LAYER cannot be activated.");
       return;
   }
-  assert(0 && "Unreachable!");
+  passert(0 && "Unreachable!");
 }
 
 bool is_layer_keycode(Custom_keycodes kc) {
@@ -63,6 +63,6 @@ bool is_layer_keycode(Custom_keycodes kc) {
 }
 
 Layers keycode_to_layer(Custom_keycodes kc) {
-  assert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
+  passert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
   return kc - SAFE_RANGE;
 }

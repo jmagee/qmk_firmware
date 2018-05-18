@@ -19,7 +19,6 @@
 #include "layers.h"
 #include "leader.h"
 #include "nkro.h"
-#include <assert.h>
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
