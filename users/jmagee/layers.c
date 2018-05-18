@@ -55,7 +55,7 @@ void activate_layer(Layers layer) {
       passert(0 && "_MAX_LAYER cannot be activated.");
       return;
   }
-  passert(0 && "Unreachable!");
+  unreachable();
 }
 
 bool is_layer_keycode(Custom_keycodes kc) {

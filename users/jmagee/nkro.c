@@ -15,9 +15,11 @@
  */
 
 #include "nkro.h"
+#include "passert.h"
 #include <quantum.h>
 
 void enable_nkro(NK_Control mode) {
+  passert((mode == NK_ENABLE || mode == NK_DISABLE || mode == NK_TOGGLE) && "Invalid mode");
   if (!eeconfig_is_enabled()) {
     eeconfig_init();
   }
