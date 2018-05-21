@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [TD_LCK]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lock_dance, NULL)
+  [TD_LCK]  = ACTION_TAP_DANCE_FN(lock_dance)
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
