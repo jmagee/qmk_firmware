@@ -9,3 +9,7 @@ endif
 ifeq ($(strip $(NO_DEBUG)), yes)
 	OPT_DEFS += -DNO_DEBUG
 endif
+
+ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
+	SRC += tapdance.c
+endif

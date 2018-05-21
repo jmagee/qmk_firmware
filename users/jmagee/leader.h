@@ -21,42 +21,6 @@
 
 LEADER_EXTERNS();
 
-/* FIXME: Move these chord routines elsewhere. */
-/* Helpers to register a key chord, i.e. mod+mod+key */
-
-/* This one is really just a keypress */
-#define CHORD1(key) do { \
-  register_code(key); \
-  unregister_code(key); \
-} while (0);
-
-#define CHORD2(mod, key) do { \
-  register_code(mod); \
-  register_code(key); \
-  unregister_code(key); \
-  unregister_code(mod); \
-} while (0);
-
-#define CHORD3(mod1, mod2, key) do { \
-  register_code(mod1); \
-  register_code(mod2); \
-  register_code(key); \
-  unregister_code(key); \
-  unregister_code(mod2); \
-  unregister_code(mod1); \
-} while (0);
-
-#define CHORD4(mod1, mod2, mod3, key) do { \
-  register_code(mod1); \
-  register_code(mod2); \
-  register_code(mod3); \
-  register_code(key); \
-  unregister_code(key); \
-  unregister_code(mod3); \
-  unregister_code(mod2); \
-  unregister_code(mod1); \
-} while (0);
-
 /* leader_fkeys - Create leader mappings for each function key (f1 - f24)
  * corrosponding to a virtual numpad on a QWERTY layout.  Logically,
  * leader f 1 -> F1

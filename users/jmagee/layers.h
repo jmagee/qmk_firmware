@@ -43,7 +43,7 @@ typedef enum {
   SYMBOLS,
   NAVI,
   MOUSER,
-  SQUEEK
+  SQUEEK,
 } Custom_keycodes;
 
 _Static_assert(QWERTY - SAFE_RANGE == _QWERTY, "Keycode cannot be converted to layer.");

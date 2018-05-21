@@ -15,7 +15,7 @@
  */
 
 #include "mouse.h"
-#include "leader.h" /* FIXME */
+#include "jmagee.h"
 #include <quantum.h>
 
 void squeek(void) {
