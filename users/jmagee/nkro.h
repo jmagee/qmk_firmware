@@ -14,8 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JMAGEE_NKRO_H
-#define JMAGEE_NKRO_H
+#pragma once
 
 /* NKRO Control */
 typedef enum {
@@ -26,5 +25,3 @@ typedef enum {
 
 /* enable_nkro - Turn on, off, or toggle NKRO. */
 void enable_nkro(NK_Control mode);
-
-#endif /* JMAGEE_NKRO_H */

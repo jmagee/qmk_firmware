@@ -14,8 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JMAGEE_LAYERS_H
-#define JMAGEE_LAYERS_H
+#pragma once
 
 #include <quantum.h>
 
@@ -86,5 +85,3 @@ bool is_layer_keycode(Custom_keycodes kc);
  * pre-condition: is_layer_keycode() must return true.
  */
 Layers keycode_to_layer(Custom_keycodes kc);
-
-#endif

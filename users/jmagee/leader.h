@@ -14,8 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JMAGEE_LEADER_H
-#define JMAGEE_LEADER_H
+#pragma once
 
 #include "quantum.h"
 
@@ -57,5 +56,3 @@ void leader_secret(void);
 
 /* Utility  - various utility leader mappings. */
 void leader_utility(void);
-
-#endif // JMAGEE_LEADER_H
