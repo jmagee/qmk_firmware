@@ -71,9 +71,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_NUMPAD] = {
-  {_______, _______, _______, _______, _______, _______, KC_B   , KC_7,    KC_8,    KC_9,    KC_E   , _______},
-  {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, _______, KC_A  ,  KC_4,    KC_5,    KC_6,    KC_D   , KC_F   },
-  {_______, _______, _______, KC_COMM, KC_DOT , _______, KC_0,    KC_1,    KC_2,    KC_3,    KC_C   , _______},
+  {_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_B   , KC_7,    KC_8,    KC_9,    KC_E   , _______},
+  {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, XXXXXXX, KC_A  ,  KC_4,    KC_5,    KC_6,    KC_D   , KC_F   },
+  {_______, XXXXXXX, XXXXXXX, KC_COMM, KC_DOT , XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_C   , _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
@@ -89,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_SYMBOLS] = {
-  {_______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR , _______, KC_AMPR, KC_LBRC, KC_RBRC, _______, KC_NUBS, _______},
-  {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, _______},
-  {_______, _______, _______, KC_UNDS, KC_EQL , _______, _______, _______, _______, _______, _______, _______},
+  {_______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR , XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_NUBS, _______},
+  {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, XXXXXXX},
+  {_______, XXXXXXX, XXXXXXX, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
@@ -109,9 +109,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_NAVI] = {
-  {_______, _______, _______, _______, KC_PGUP, _______, _______, _______, _______, _______, _______, _______},
-  {_______, _______, _______, KC_DEL , KC_PGDN, _______, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {_______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______},
+  {_______, XXXXXXX, XXXXXXX, KC_DEL , KC_PGDN, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, XXXXXXX, XXXXXXX},
+  {_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |  C3  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  C4  |  C1  |      |  <-  | Down | Up   |  ->  |      |      |
+ * |      |SQUEEK|      |  C4  |  C1  |      |  <-  | Down | Up   |  ->  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |  C2  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -127,9 +127,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_MOUSER] = {
-  {_______, _______, _______, _______, KC_BTN3, _______, _______, _______, _______, _______, _______, _______},
-  {_______, SQUEEK , _______, KC_BTN4, KC_BTN1, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______},
-  {_______, _______, _______, _______, KC_BTN2, _______, _______, _______, _______, _______, _______, _______},
+  {_______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN3, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______},
+  {_______, SQUEEK , XXXXXXX, KC_BTN4, KC_BTN1, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX},
+  {_______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 };
