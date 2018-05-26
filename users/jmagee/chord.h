@@ -16,37 +16,15 @@
 
 #pragma once
 
+#include <stdint.h>
+
 /* Helpers to register a key chord, i.e. mod+mod+key */
 
 /* This one is really just a keypress */
-#define CHORD1(key) do { \
-  register_code(key); \
-  unregister_code(key); \
-} while (0);
+void chord1(uint8_t key);
 
-#define CHORD2(mod, key) do { \
-  register_code(mod); \
-  register_code(key); \
-  unregister_code(key); \
-  unregister_code(mod); \
-} while (0);
+void chord2(uint8_t mod, uint8_t key);
 
-#define CHORD3(mod1, mod2, key) do { \
-  register_code(mod1); \
-  register_code(mod2); \
-  register_code(key); \
-  unregister_code(key); \
-  unregister_code(mod2); \
-  unregister_code(mod1); \
-} while (0);
+void chord3(uint8_t mod1, uint8_t mod2, uint8_t key);
 
-#define CHORD4(mod1, mod2, mod3, key) do { \
-  register_code(mod1); \
-  register_code(mod2); \
-  register_code(mod3); \
-  register_code(key); \
-  unregister_code(key); \
-  unregister_code(mod3); \
-  unregister_code(mod2); \
-  unregister_code(mod1); \
-} while (0);
+void chord4(uint8_t mod1, uint8_t mod2, uint8_t mod3, uint8_t key);

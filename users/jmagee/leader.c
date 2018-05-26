@@ -15,7 +15,7 @@
  */
 
 #include "leader.h"
-#include "jmagee.h"
+#include "chord.h"
 
 #if (__has_include("secrets.h") && !defined(NO_SECRETS))
 #include "secrets.h"
@@ -42,96 +42,96 @@ PROGMEM static const uint8_t digits[10] = {
 };
 
 /* Helper to map F-key based sequences to a virtual numpad.
- * leader_seq is simply a keycode.
- * mapping is a function that accepts a keycode argument (one of the
+ * leader_key is simply a keycode.
+ * fkey_map is a function that accepts a keycode argument (one of the
  * F keys) and does something with it (e.g. register keypress events)
  * */
-#define f1_to_vnumpad(leading_seq, mapping)   do { \
-  uint8_t f = 0; \
-  \
-  for (uint8_t i = 1; i < 25; ++i) { \
-    if (i < 10) { \
-      /* F1 - F9 */ \
-      SEQ_TWO_KEYS(leading_seq, digits[i]) { \
-        mapping(fkeys[f]); \
-      } \
-    } else { \
-      /* F10 - F24 */ \
-      uint8_t d1 = i < 20 ? 1 : 2; \
-      SEQ_THREE_KEYS(leading_seq, digits[d1], digits[i % 10]) { \
-        mapping(fkeys[f]); \
-      } \
-    } \
-    ++f; \
-  } \
-} while (0);
+static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
+  uint8_t f = 0;
+
+  for (uint8_t i = 1; i < 25; ++i) {
+    if (i < 10) {
+      /* F1 - F9 */
+      SEQ_TWO_KEYS(leading_key, digits[i]) {
+        fkey_map(fkeys[f]);
+      }
+    } else {
+      /* F10 - F24 */
+      uint8_t d1 = i < 20 ? 1 : 2;
+      SEQ_THREE_KEYS(leading_key, digits[d1], digits[i % 10]) {
+        fkey_map(fkeys[f]);
+      }
+    }
+    ++f;
+  }
+}
+
+static void single_fkey_map(uint8_t f) {
+  chord1(f);
+}
+
+static void ctrl_alt_fkey_map(uint8_t f) {
+  chord3(KC_LCTRL, KC_LALT, f);
+}
 
 void leader_fkeys(void) {
-  #define fkey_map(f)  do { \
-    CHORD1(f); \
-  } while (0);
-
-  f1_to_vnumpad(KC_F, fkey_map);
+  f1_to_vnumpad(KC_F, single_fkey_map);
 }
 
 void leader_ctrl_alt_del(void) {
   SEQ_THREE_KEYS(KC_C, KC_A, KC_D) {
-    CHORD3(KC_LCTRL, KC_LALT, KC_DELETE);
+    chord3(KC_LCTRL, KC_LALT, KC_DELETE);
   }
 }
 
 void leader_virtual_consoles(void) {
-  #define vkey_map(f)  do { \
-    CHORD3(KC_LCTRL, KC_LALT, f); \
-  } while (0);
-
-  f1_to_vnumpad(KC_V, vkey_map);
+  f1_to_vnumpad(KC_V, ctrl_alt_fkey_map);
 }
 
 void leader_xmonad(void) {
   /* launch a terminal */
   SEQ_TWO_KEYS(KC_X, KC_ENT) {
-    CHORD3(KC_LALT, KC_LSFT, KC_ENT);
+    chord3(KC_LALT, KC_LSFT, KC_ENT);
   }
 
   /* launch a dmenu */
   SEQ_TWO_KEYS(KC_X, KC_P) {
-    CHORD2(KC_LALT, KC_P);
+    chord2(KC_LALT, KC_P);
   }
 
   /* lock the screen */
   SEQ_TWO_KEYS(KC_X, KC_X) {
-    CHORD2(KC_LALT, KC_X);
+    chord2(KC_LALT, KC_X);
   }
 
   /* close window */
   SEQ_TWO_KEYS(KC_X, KC_C) {
-    CHORD2(KC_LALT, KC_C);
+    chord2(KC_LALT, KC_C);
   }
 
   /* cycle layout */
   SEQ_TWO_KEYS(KC_X, KC_SPC) {
-    CHORD2(KC_LALT, KC_SPC);
+    chord2(KC_LALT, KC_SPC);
   }
 
   /* Toggle the status bar (e.g. xmobar or similiar) */
   SEQ_TWO_KEYS(KC_X, KC_B) {
-    CHORD2(KC_LALT, KC_B);
+    chord2(KC_LALT, KC_B);
   }
 
   /* Start a pomodoro */
   SEQ_TWO_KEYS(KC_X, KC_D) {
-    CHORD2(KC_LALT, KC_B);
+    chord2(KC_LALT, KC_B);
   }
 
   /* quit */
   SEQ_TWO_KEYS(KC_X, KC_Q) {
-    CHORD4(KC_LALT, KC_LSFT, KC_LCTL, KC_Q);
+    chord4(KC_LALT, KC_LSFT, KC_LCTL, KC_Q);
   }
 
   /* restart */
   SEQ_TWO_KEYS(KC_X, KC_R) {
-    CHORD3(KC_LALT, KC_LSFT, KC_Q);
+    chord3(KC_LALT, KC_LSFT, KC_Q);
   }
 }
 

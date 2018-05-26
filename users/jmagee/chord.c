@@ -14,16 +14,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mouse.h"
 #include "chord.h"
 #include <quantum.h>
 
-void squeek(void) {
-  /* Toggle through the mouse acceleration speeds. */
-  static const uint8_t lookup[3] = { KC_ACL0, KC_ACL1, KC_ACL2 };
-  static uint8_t current = 0;
-  if (++current > 2) {
-    current = 0;
-  }
-  chord1(lookup[current]);
+void chord1(uint8_t key) {
+  register_code(key);
+  unregister_code(key);
+}
+
+void chord2(uint8_t mod, uint8_t key) {
+  register_code(mod);
+  register_code(key);
+  unregister_code(key);
+  unregister_code(mod);
+}
+
+void chord3(uint8_t mod1, uint8_t mod2, uint8_t key) {
+  register_code(mod1);
+  register_code(mod2);
+  register_code(key);
+  unregister_code(key);
+  unregister_code(mod2);
+  unregister_code(mod1);
+}
+
+void chord4(uint8_t mod1, uint8_t mod2, uint8_t mod3, uint8_t key) {
+  register_code(mod1);
+  register_code(mod2);
+  register_code(mod3);
+  register_code(key);
+  unregister_code(key);
+  unregister_code(mod3);
+  unregister_code(mod2);
+  unregister_code(mod1);
 }

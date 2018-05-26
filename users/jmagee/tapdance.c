@@ -15,7 +15,7 @@
  */
 
 #include "tapdance.h"
-#include "jmagee.h"
+#include "chord.h"
 #include <quantum.h>
 
 #if (__has_include("secrets.h") && !defined(NO_SECRETS))
@@ -48,12 +48,12 @@ static void update_lock_state(Lock_t new_state) {
     case Unlocked:
       if (new_state == Short_lock) {
         dprintf("Unlocked -> Short_lock\n");
-        CHORD2(KC_LALT, KC_X);
+        chord2(KC_LALT, KC_X);
         sl.screen_lock = new_state;
         sl.time_of_lock = timer_read32();
       } else if (new_state == Long_lock) {
         dprintf("Unlocked -> Long_lock\n");
-        CHORD2(KC_LALT, KC_X);
+        chord2(KC_LALT, KC_X);
         sl.screen_lock = new_state;
         sl.time_of_lock = timer_read32();
       }

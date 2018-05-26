@@ -1,4 +1,4 @@
-SRC += leader.c nkro.c layers.c passert.c mouse.c
+SRC += leader.c nkro.c layers.c passert.c mouse.c chord.c
 
 EXTRAFLAGS += -flto
 
