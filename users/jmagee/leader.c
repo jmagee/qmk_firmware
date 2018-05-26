@@ -129,6 +129,13 @@ void leader_xmonad(void) {
   SEQ_TWO_KEYS(KC_X, KC_R) {
     chord3(KC_LALT, KC_LSFT, KC_Q);
   }
+
+  /* Switch desktops */
+  for (uint8_t i = 1; i < 10; ++i) {
+    SEQ_TWO_KEYS(KC_X, digits[i]) {
+      chord2(KC_LALT, i);
+    }
+  }
 }
 
 void leader_secret(void) {
