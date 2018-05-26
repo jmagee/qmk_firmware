@@ -117,7 +117,7 @@ void leader_xmonad(void) {
 
   /* Start a pomodoro */
   SEQ_TWO_KEYS(KC_X, KC_D) {
-    chord2(KC_LALT, KC_B);
+    chord2(KC_LALT, KC_D);
   }
 
   /* quit */
