@@ -19,7 +19,6 @@
 #include "layers.h"
 #include "leader.h"
 #include "mouse.h"
-#include "nkro.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -163,10 +162,7 @@ void matrix_scan_user(void) {
     leader_xmonad();
     leader_secret();
     leader_utility();
-
-    SEQ_ONE_KEY(KC_N) {
-      enable_nkro(NK_TOGGLE);
-    }
+    leader_nkro();
   }
 }
 

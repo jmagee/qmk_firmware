@@ -16,6 +16,7 @@
 
 #include "leader.h"
 #include "chord.h"
+#include "nkro.h"
 
 #if (__has_include("secrets.h") && !defined(NO_SECRETS))
 #include "secrets.h"
@@ -156,5 +157,11 @@ void leader_utility(void) {
   SEQ_FIVE_KEYS(KC_F, KC_L, KC_A, KC_S, KC_H) {
     register_code16(RESET);
     unregister_code16(RESET);
+  }
+}
+
+void leader_nkro(void) {
+  SEQ_ONE_KEY(KC_N) {
+    enable_nkro(NK_TOGGLE);
   }
 }

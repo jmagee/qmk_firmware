@@ -56,3 +56,6 @@ void leader_secret(void);
 
 /* Utility  - various utility leader mappings. */
 void leader_utility(void);
+
+/* NKRO - N-key rollover leader mapping. */
+void leader_nkro(void);
