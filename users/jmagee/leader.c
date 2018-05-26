@@ -66,16 +66,12 @@ static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
   }
 }
 
-static void single_fkey_map(uint8_t f) {
-  chord1(f);
-}
-
 static void ctrl_alt_fkey_map(uint8_t f) {
   chord3(KC_LCTRL, KC_LALT, f);
 }
 
 void leader_fkeys(void) {
-  f1_to_vnumpad(KC_F, single_fkey_map);
+  f1_to_vnumpad(KC_F, chord1);
 }
 
 void leader_ctrl_alt_del(void) {
