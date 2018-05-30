@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "tapdance.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  KEYMAP(TD(TD_LCK))
+  LAYOUT(TD(TD_LCK))
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
