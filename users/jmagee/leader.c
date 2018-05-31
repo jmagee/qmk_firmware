@@ -22,13 +22,13 @@
 #include "secrets.h"
 #else
 PROGMEM const char secrets[][32] = { "a" };
-#endif
 
 enum {
-  SECRET_1 = 0,
-  SECRET_2,
-  SECRET_3
+  SECRET_W = 0,
+  SECRET_D,
+  SECRET_P
 };
+#endif
 
 enum { N_FKEYS = 24 };
 PROGMEM static const uint8_t fkeys[N_FKEYS] = {
@@ -141,15 +141,15 @@ void leader_xmonad(void) {
 
 void leader_secret(void) {
   SEQ_TWO_KEYS(KC_S, KC_W) {
-    send_string_P(secrets[SECRET_1]);
+    send_string_P(secrets[SECRET_W]);
   }
 
   SEQ_TWO_KEYS(KC_S, KC_D) {
-    send_string_P(secrets[SECRET_2]);
+    send_string_P(secrets[SECRET_D]);
   }
 
   SEQ_TWO_KEYS(KC_S, KC_S) {
-    send_string_P(secrets[SECRET_3]);
+    send_string_P(secrets[SECRET_P]);
   }
 }
 
