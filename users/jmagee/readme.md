@@ -39,7 +39,7 @@ The following table summarizes the available layers:
 |
 | Layer enum   | Keycode         | Required macro            | Note                                   |
 |--------------|-----------------|---------------------------|----------------------------------------|
-| `_QWERTY`    | `QWERTY`        | None - always enabled     | Base layer                             |
+| `_BASE`      | `BASE`          | None - always enabled     | Base layer - probably qwerty           |
 | `_ALBHED`    | `ALBHED`        | `USE_ALBHED_LAYER`        | Layer for Al Bhed 'language' (cipher)  |
 | `_NUMPAD`    | `NUMPAD`        | `USE_NUMPAD_LAYER`        | Layer for numpad overlays              |
 | `_SYMBOLS`   | `SYMBOLS`       | `USE_SYMBOLS_LAYER`       | Layer for symbols (!@#$, etc.)         |

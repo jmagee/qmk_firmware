@@ -19,7 +19,7 @@
 #include <quantum.h>
 
 typedef enum {
-  _QWERTY = 0,
+  _BASE = 0,
 
 #ifdef USE_ALBHED_LAYER
   _ALBHED,
@@ -60,7 +60,7 @@ typedef enum {
 } Layer_state;
 
 typedef enum {
-  QWERTY = SAFE_RANGE,
+  BASE = SAFE_RANGE,
 
 #ifdef USE_ALBHED_LAYER
   ALBHED,
@@ -95,7 +95,7 @@ typedef enum {
   SQUEEK,
 } Custom_keycodes;
 
-_Static_assert(QWERTY - SAFE_RANGE == _QWERTY, "Keycode cannot be converted to layer.");
+_Static_assert(BASE - SAFE_RANGE == _BASE, "Keycode cannot be converted to layer.");
 #ifdef USE_ALBHED_LAYER
 _Static_assert(ALBHED - SAFE_RANGE == _ALBHED, "Keycode cannot be converted to layer.");
 #endif
@@ -160,7 +160,7 @@ void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Layers layer);
 void activate_layer(Layers layer);
 
 /* Check if a keycode corrosponds to a layer.
- * E.g. _QWERTY -> QWERTY.
+ * E.g. _BASE -> BASE
  */
 bool is_layer_keycode(Custom_keycodes kc);
 

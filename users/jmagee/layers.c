@@ -36,10 +36,10 @@ void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Layers layer) {
 void activate_layer(Layers layer) {
   static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
   switch (layer) {
-    case _QWERTY:
-      print("mode just switched to qwerty and this is a huge string\n");
-      set_single_persistent_default_layer(_QWERTY);
-      layer_map[_QWERTY] = Layer_persistant;
+    case _BASE:
+      print("mode just switched to BASE and this is a huge string\n");
+      set_single_persistent_default_layer(_BASE);
+      layer_map[_BASE] = Layer_persistant;
       return;
 #ifdef USE_ALBHED_LAYER
     case _ALBHED:
@@ -75,7 +75,7 @@ void activate_layer(Layers layer) {
 }
 
 bool is_layer_keycode(Custom_keycodes kc) {
-  return kc >= QWERTY && kc < END_OF_LAYERS;
+  return kc >= BASE && kc < END_OF_LAYERS;
 }
 
 Layers keycode_to_layer(Custom_keycodes kc) {
