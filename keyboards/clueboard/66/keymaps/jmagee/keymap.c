@@ -3,12 +3,6 @@
 #include "layers.h"
 #include "leader.h"
 
-// Each layer gets a name for readability, which is then used in the keymap matrix below.
-// The underscores don't mean anything - you can have a layer called STUFF or any other name.
-#define _BL 0
-#define _FL 1
-#define _CL 2
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwertz.  We're re-using the _QWERTY layer name because it is close enough. */
 [_QWERTY] = LAYOUT(
@@ -33,16 +27,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,XXXXXXX,                KC_VOLD,
   _______,_______,_______,_______,_______,_______,_______,KC_MPRV,KC_MSTP,KC_MPLY,KC_MNXT,_______,_______,_______,
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        KC_PGUP,
-  _______,_______,_______,_______,        _______,_______,                        _______,_______,MO(_FL),_______,KC_HOME,KC_PGDN,KC_END),
+  _______,_______,_______,_______,        _______,_______,                        _______,_______,_______,_______,KC_HOME,KC_PGDN,KC_END),
 
-  /* Keymap _CL: Control layer
+  /* GOD: Control layer
    */
-[_CL] = LAYOUT(
+[_GOD] = LAYOUT(
   BL_STEP,RGB_M_P,RGB_M_B,RGB_M_R,RGB_M_SW,RGB_M_SN,RGB_M_K,RGB_M_X,RGB_M_G,_______,_______,_______,_______,_______,RGB_TOG,        RGB_VAI,
   _______,_______,_______,_______,RESET,  _______,_______,_______,_______,_______,_______,_______,_______,_______,                RGB_VAD,
-  _______,_______,MO(_CL),_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
-  MO(_FL),_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        RGB_SAI,
-  _______,_______,_______,_______,        RGB_MOD,   RGB_MOD,                     _______,_______,MO(_FL),_______,RGB_HUD,RGB_SAD,RGB_HUI),
+  _______,RGB_M_R,RGB_M_SN,_______,_______,_______,_______,_______,RGB_M_K,_______,_______,_______,_______,_______,
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        RGB_SAI,
+  _______,_______,_______,_______,        RGB_MOD,   RGB_MOD,                     _______,_______,_______,_______,RGB_HUD,RGB_SAD,RGB_HUI),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {

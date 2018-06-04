@@ -45,6 +45,10 @@ typedef enum {
   _FUNC,
 #endif
 
+#ifdef USE_GOD_LAYER
+  _GOD,
+#endif
+
   _MAX_LAYER      /* Not an actual layer; must appear last in the enum. */
 } Layers;
 
@@ -82,6 +86,10 @@ typedef enum {
   FUNC,
 #endif
 
+#ifdef USE_GOD_LAYER
+  GOD,
+#endif
+
   END_OF_LAYERS, /* Not an actual keycode; must appear after the last layer,
                   * but other custom keycodes may appear after. */
   SQUEEK,
@@ -107,6 +115,10 @@ _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to l
 _Static_assert(FUNC - SAFE_RANGE == _FUNC, "Keycode cannot be converted to layer.");
 #endif
 
+#ifdef USE_GOD_LAYER
+_Static_assert(GOD - SAFE_RANGE == _GOD, "Keycode cannot be converted to layer.");
+#endif
+
 /* Smart toggle - toggle layer on tap, momentarily activate on hold. */
 #define ST(layer, layer_code) LT(layer, layer_code)
 
@@ -128,6 +140,9 @@ _Static_assert(FUNC - SAFE_RANGE == _FUNC, "Keycode cannot be converted to layer
 #endif
 #ifdef USE_FUNC_LAYER
 #  define T_FUNC   ST(_FUNC, FUNC)
+#endif
+#ifdef USE_GOD_LAYER
+#  define T_GOD    ST(_GOD, GOD)
 #endif
 
 /* Escape on tap, control on hold.*/

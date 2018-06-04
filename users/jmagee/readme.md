@@ -46,6 +46,7 @@ The following table summarizes the available layers:
 | `_NAVI`      | `NAVI`          | `USE_NAVI_LAYER`          | Layer for navigation (arrows, etc)     |
 | `_MOUSER`    | `MOUSER`        | `USE_MOUSER_LAYER`        | Layer for MOUSEKEY                     |
 | `_FUNC`      | `FUNC`          | `USE_FUNC_LAYER`          | Layer for function keys (F-keys, etc)  |
+| `_GOD`       | `GOD`           | `USE_GOD_LAYER`           | Layer for almighty power               |
 
 
 The motivation for the extra complication of requiring opting-in via a macro is

@@ -7,3 +7,4 @@
 /* Layer settings */
 #define USE_ALBHED_LAYER
 #define USE_FUNC_LAYER
+#define USE_GOD_LAYER

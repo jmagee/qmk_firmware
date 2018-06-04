@@ -62,6 +62,9 @@ void activate_layer(Layers layer) {
 #ifdef USE_FUNC_LAYER
     case _FUNC:
 #endif
+#ifdef USE_GOD_LAYER
+    case _GOD:
+#endif
       switch_transient_layer(layer_map, layer);
       return;
     case _MAX_LAYER:
