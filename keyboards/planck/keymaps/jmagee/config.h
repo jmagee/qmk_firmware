@@ -42,4 +42,11 @@
 /* Leader key settings */
 #define LEADER_TIMEOUT 300
 
+/* Layer settings */
+#define USE_ALBHED_LAYER
+#define USE_NUMPAD_LAYER
+#define USE_NAVI_LAYER
+#define USE_SYMBOLS_LAYER
+#define USE_MOUSER_LAYER
+
 #endif

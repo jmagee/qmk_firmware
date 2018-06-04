@@ -41,14 +41,27 @@ void activate_layer(Layers layer) {
       set_single_persistent_default_layer(_QWERTY);
       layer_map[_QWERTY] = Layer_persistant;
       return;
+#ifdef USE_ALBHED_LAYER
     case _ALBHED:
       print("Famlusa\n");
       switch_transient_layer(layer_map, _ALBHED);
       return;
+#endif
+#ifdef USE_NUMPAD_LAYER
     case _NUMPAD:
+#endif
+#ifdef USE_SYMBOLS_LAYER
     case _SYMBOLS:
+#endif
+#ifdef USE_NAVI_LAYER
     case _NAVI:
+#endif
+#ifdef USE_MOUSER_LAYER
     case _MOUSER:
+#endif
+#ifdef USE_FUNC_LAYER
+    case _FUNC:
+#endif
       switch_transient_layer(layer_map, layer);
       return;
     case _MAX_LAYER:
@@ -59,7 +72,7 @@ void activate_layer(Layers layer) {
 }
 
 bool is_layer_keycode(Custom_keycodes kc) {
-  return kc >= QWERTY && kc <= MOUSER;
+  return kc >= QWERTY && kc < END_OF_LAYERS;
 }
 
 Layers keycode_to_layer(Custom_keycodes kc) {

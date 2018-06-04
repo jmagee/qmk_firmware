@@ -18,12 +18,14 @@ in mind.  In particularly,
  * Only one transient layer can be enabled at a time.
 
 In practice, leveraging the layers here can be done by:
-1. Define keymaps for any desired layers found in the `Layers` enum.
-2. Use keycodes from the `Custom_keycodes` enum in your layers, ensuring that
+
+1. #define the layer macro for each desired layer in your config.h.
+2. Define keymaps for desired layers found in the `Layers` enum.
+3. Use keycodes from the `Custom_keycodes` enum in your layers, ensuring that
    you do not use any keycodes that correspond to layers that you don't plan to
    implement. (Meaning if you use the `ALBHED` keycode, you better define an
-   `_ALBHED` kymap.
-3. Add the following to `process_record_user`:
+   `_ALBHED` keymap.
+4. Add the following to `process_record_user`:
 ```
 if (is_layer_keycode(keycode)) {
     if (record->event.pressed) {
@@ -32,6 +34,29 @@ if (is_layer_keycode(keycode)) {
     }
   }
 ```
+
+The following table summarizes the available layers:
+|
+| Layer enum   | Keycode         | Required macro            | Note                                   |
+|--------------|-----------------|---------------------------|----------------------------------------|
+| `_QWERTY`    | `QWERTY`        | None - always enabled     | Base layer                             |
+| `_ALBHED`    | `ALBHED`        | `USE_ALBHED_LAYER`        | Layer for Al Bhed 'language' (cipher)  |
+| `_NUMPAD`    | `NUMPAD`        | `USE_NUMPAD_LAYER`        | Layer for numpad overlays              |
+| `_SYMBOLS`   | `SYMBOLS`       | `USE_SYMBOLS_LAYER`       | Layer for symbols (!@#$, etc.)         |
+| `_NAVI`      | `NAVI`          | `USE_NAVI_LAYER`          | Layer for navigation (arrows, etc)     |
+| `_MOUSER`    | `MOUSER`        | `USE_MOUSER_LAYER`        | Layer for MOUSEKEY                     |
+| `_FUNC`      | `FUNC`          | `USE_FUNC_LAYER`          | Layer for function keys (F-keys, etc)  |
+
+
+The motivation for the extra complication of requiring opting-in via a macro is
+to allow these layers (and the code to work with them) to be reused between
+keyboards, but without wasting any space for potentially unused layers.
+For example, on a 40% the NUMPAD, SYMBOLS, and NAVI layers are very useful but
+on a 60% they may not be useful.
+
+For each layer, a "smart toggle" is provided (roughly of the form `T_LAYER`).
+These yield toggle on tap and momentarily activate on hold.  I.e.
+`LT(LAYER, LAYER_KEYCODE)`.
 
 Leaders
 -------

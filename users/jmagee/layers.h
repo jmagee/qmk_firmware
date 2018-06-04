@@ -20,11 +20,31 @@
 
 typedef enum {
   _QWERTY = 0,
+
+#ifdef USE_ALBHED_LAYER
   _ALBHED,
+#endif
+
+#ifdef USE_NUMPAD_LAYER
   _NUMPAD,
+#endif
+
+#ifdef USE_SYMBOLS_LAYER
   _SYMBOLS,
+#endif
+
+#ifdef USE_NAVI_LAYER
   _NAVI,
+#endif
+
+#ifdef USE_MOUSER_LAYER
   _MOUSER,
+#endif
+
+#ifdef USE_FUNC_LAYER
+  _FUNC,
+#endif
+
   _MAX_LAYER      /* Not an actual layer; must appear last in the enum. */
 } Layers;
 
@@ -37,30 +57,78 @@ typedef enum {
 
 typedef enum {
   QWERTY = SAFE_RANGE,
+
+#ifdef USE_ALBHED_LAYER
   ALBHED,
+#endif
+
+#ifdef USE_NUMPAD_LAYER
   NUMPAD,
+#endif
+
+#ifdef USE_SYMBOLS_LAYER
   SYMBOLS,
+#endif
+
+#ifdef USE_NAVI_LAYER
   NAVI,
+#endif
+
+#ifdef USE_MOUSER_LAYER
   MOUSER,
+#endif
+
+#ifdef USE_FUNC_LAYER
+  FUNC,
+#endif
+
+  END_OF_LAYERS, /* Not an actual keycode; must appear after the last layer,
+                  * but other custom keycodes may appear after. */
   SQUEEK,
 } Custom_keycodes;
 
 _Static_assert(QWERTY - SAFE_RANGE == _QWERTY, "Keycode cannot be converted to layer.");
+#ifdef USE_ALBHED_LAYER
 _Static_assert(ALBHED - SAFE_RANGE == _ALBHED, "Keycode cannot be converted to layer.");
+#endif
+#ifdef USE_NUMPAD_LAYER
 _Static_assert(NUMPAD - SAFE_RANGE == _NUMPAD, "Keycode cannot be converted to layer.");
+#endif
+#ifdef USE_SYMBOLS_LAYER
 _Static_assert(SYMBOLS - SAFE_RANGE == _SYMBOLS, "Keycode cannot be converted to layer.");
+#endif
+#ifdef USE_NAVI_LAYER
 _Static_assert(NAVI - SAFE_RANGE == _NAVI, "Keycode cannot be converted to layer.");
+#endif
+#ifdef USE_MOUSER_LAYER
 _Static_assert(MOUSER - SAFE_RANGE == _MOUSER, "Keycode cannot be converted to layer.");
+#endif
+#ifdef USE_FUNC_LAYER
+_Static_assert(FUNC - SAFE_RANGE == _FUNC, "Keycode cannot be converted to layer.");
+#endif
 
 /* Smart toggle - toggle layer on tap, momentarily activate on hold. */
 #define ST(layer, layer_code) LT(layer, layer_code)
 
 /* Smart toggles for specific layout / keycode combos. */
-#define T_NUMPAD ST(_NUMPAD, NUMPAD)
-#define T_SYM    ST(_SYMBOLS, SYMBOLS)
-#define T_NAVI   ST(_NAVI, NAVI)
-#define T_MOUSE  ST(_MOUSER, MOUSER)
-#define T_BHED   ST(_ALBHED, ALBHED)
+#ifdef USE_NUMPAD_LAYER
+#  define T_NUMPAD ST(_NUMPAD, NUMPAD)
+#endif
+#ifdef USE_SYMBOLS_LAYER
+#  define T_SYM    ST(_SYMBOLS, SYMBOLS)
+#endif
+#ifdef USE_NAVI_LAYER
+#  define T_NAVI   ST(_NAVI, NAVI)
+#endif
+#ifdef USE_MOUSER_LAYER
+#  define T_MOUSE  ST(_MOUSER, MOUSER)
+#endif
+#ifdef USE_ALBHED_LAYER
+#  define T_BHED   ST(_ALBHED, ALBHED)
+#endif
+#ifdef USE_FUNC_LAYER
+#  define T_FUNC   ST(_FUNC, FUNC)
+#endif
 
 /* Escape on tap, control on hold.*/
 #define ESCTRL   CTL_T(KC_ESC)
