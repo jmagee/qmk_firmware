@@ -59,3 +59,6 @@ void leader_utility(void);
 
 /* NKRO - N-key rollover leader mapping. */
 void leader_nkro(void);
+
+/* Enable god mode */
+void leader_god(void);

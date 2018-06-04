@@ -15,7 +15,9 @@
  */
 
 #include "leader.h"
+
 #include "chord.h"
+#include "layers.h"
 #include "nkro.h"
 
 #if (__has_include("secrets.h") && !defined(NO_SECRETS))
@@ -164,4 +166,12 @@ void leader_nkro(void) {
   SEQ_ONE_KEY(KC_N) {
     enable_nkro(NK_TOGGLE);
   }
+}
+
+void leader_god(void) {
+#ifdef USE_GOD_LAYER
+  SEQ_THREE_KEYS(KC_G, KC_O, KC_D) {
+    activate_layer(_GOD);
+  }
+#endif
 }

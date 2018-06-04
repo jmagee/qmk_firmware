@@ -4,7 +4,7 @@
 #include "leader.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Qwertz.  We're re-using the _QWERTY layer name because it is close enough. */
+/* Qwertz. */
 [_BASE] = LAYOUT(
   DE_CIRC,DE_1,   DE_2,   DE_3,   DE_4,   DE_5,   DE_6,   DE_7,   DE_8,   DE_9,   DE_0,   DE_SS,  DE_ACUT,XXXXXXX,KC_BSPC,        KC_PGUP,
   KC_TAB, DE_Q,   DE_W,   DE_E,   DE_R,   DE_T,   DE_Z,   DE_U,   DE_I,   DE_O,   DE_P,   DE_UE,  DE_PLUS,XXXXXXX,                KC_PGDN,
@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,DE_W,   DE_Q,   DE_L,   DE_J,   DE_P,   DE_H,   DE_S,   _______,_______,_______,_______,_______,        _______,
   _______,_______,_______,_______,        _______,_______,                        _______,_______,_______,_______,_______,_______,_______),
 
-  /* Keymap _FL: Function Layer */
+/* Keymap _FL: Function Layer */
 [_FUNC] = LAYOUT(
   _______, KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10, KC_F11, KC_F12, XXXXXXX,KC_MUTE,       KC_VOLU,
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,XXXXXXX,                KC_VOLD,
@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        KC_PGUP,
   _______,_______,_______,_______,        _______,_______,                        _______,_______,_______,_______,KC_HOME,KC_PGDN,KC_END),
 
-  /* GOD: Control layer */
+/* GOD: Control layer */
 [_GOD] = LAYOUT(
   BL_STEP,RGB_M_P,RGB_M_B,RGB_M_R,RGB_M_SW,RGB_M_SN,RGB_M_K,RGB_M_X,RGB_M_G,_______,_______,_______,_______,_______,RGB_TOG,        RGB_VAI,
   _______,_______,_______,_______,RESET,  _______,_______,_______,_______,_______,_______,_______,_______,_______,                RGB_VAD,
@@ -55,6 +55,7 @@ void matrix_scan_user(void) {
     leader_ctrl_alt_del();
     leader_utility();
     leader_nkro();
+    leader_god();
   }
 }
 /* vim: set nowrap : */
