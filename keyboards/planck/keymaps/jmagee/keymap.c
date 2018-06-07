@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "action_layer.h"
+#include "chord.h"
 #include "layers.h"
 #include "leader.h"
 #include "mouse.h"
@@ -171,6 +172,33 @@ bool music_mask_user(uint16_t keycode) {
     default:
       return true;
   }
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  /* Send a special keystroke on layer state change.
+   * My window manager maps this to a utility which records the
+   * currently active layer and displays it. */
+  switch (biton32(state)) {
+    case _BASE:
+      meh_chord(KC_B);
+      break;
+    case _ALBHED:
+      meh_chord(KC_A);
+      break;
+    case _NUMPAD:
+      meh_chord(KC_N);
+      break;
+    case _SYMBOLS:
+      meh_chord(KC_S);
+      break;
+    case _NAVI:
+      meh_chord(KC_V);
+      break;
+    case _MOUSER:
+      meh_chord(KC_M);
+      break;
+  }
+  return state;
 }
 
 /* vim: set nowrap : */

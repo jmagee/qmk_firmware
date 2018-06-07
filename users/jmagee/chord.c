@@ -48,3 +48,13 @@ void chord4(uint8_t mod1, uint8_t mod2, uint8_t mod3, uint8_t key) {
   unregister_code(mod2);
   unregister_code(mod1);
 }
+
+void meh_chord(uint8_t key) {
+  register_code(KC_LCTL);
+  register_code(KC_LSFT);
+  register_code(KC_LALT);
+  register_code(key);
+  unregister_code(KC_LALT);
+  unregister_code(KC_LSFT);
+  unregister_code(KC_LCTL);
+}

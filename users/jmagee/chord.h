@@ -28,3 +28,5 @@ void chord2(uint8_t mod, uint8_t key);
 void chord3(uint8_t mod1, uint8_t mod2, uint8_t key);
 
 void chord4(uint8_t mod1, uint8_t mod2, uint8_t mod3, uint8_t key);
+
+void meh_chord(uint8_t key);
