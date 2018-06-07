@@ -31,7 +31,7 @@ static const char *secret_unlock(void) {
 #endif
 
 typedef enum {
-  Unlocked,     /* Unlocked */
+  Unlocked,
   Short_lock,   /* A short lock - this can "auto-unlocked" */
   Long_lock,    /* Long lock - no choice but to manually unlock via a human */
 } Lock_t;
@@ -48,26 +48,26 @@ static void update_lock_state(Lock_t new_state) {
     case Unlocked:
       if (new_state == Short_lock) {
         dprintf("Unlocked -> Short_lock\n");
-        chord2(KC_LALT, KC_X);
-        sl.screen_lock = new_state;
-        sl.time_of_lock = timer_read32();
       } else if (new_state == Long_lock) {
         dprintf("Unlocked -> Long_lock\n");
-        chord2(KC_LALT, KC_X);
-        sl.screen_lock = new_state;
-        sl.time_of_lock = timer_read32();
+      } else { /* new_state == Unlocked */
+        break;
       }
+      chord2(KC_LALT, KC_X);
+      sl.screen_lock = new_state;
+      sl.time_of_lock = timer_read32();
       break;
     case Short_lock:
       if (new_state == Unlocked) {
         dprintf("Short_lock -> Unlocked\n");
-        sl.screen_lock = new_state;
         send_string_P(secret_unlock());
       } else if (new_state == Long_lock) {
         dprintf("Short_lock -> Long_lock\n");
-        sl.screen_lock = new_state;
         sl.time_of_lock = timer_read32();
+      } else { /* new_state = Short_lock */
+        break;
       }
+      sl.screen_lock = new_state;
       break;
     case Long_lock:
       dprintf("Cannot unlock or demote \"Long_lock\"");
@@ -90,7 +90,6 @@ void lock_dance(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void expire_short_lock(void) {
-
   if (timer_elapsed32(sl.time_of_lock) > AUTO_LOCK_TIME) {
     update_lock_state(Long_lock);
   }
