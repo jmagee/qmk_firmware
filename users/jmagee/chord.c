@@ -54,6 +54,7 @@ void meh_chord(uint8_t key) {
   register_code(KC_LSFT);
   register_code(KC_LALT);
   register_code(key);
+  unregister_code(key);
   unregister_code(KC_LALT);
   unregister_code(KC_LSFT);
   unregister_code(KC_LCTL);
