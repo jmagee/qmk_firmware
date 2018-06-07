@@ -37,6 +37,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,_______,_______,        RGB_MOD,   RGB_MOD,                     _______,_______,_______,_______,RGB_HUD,RGB_SAD,RGB_HUI),
 };
 
+void matrix_init_user(void) {
+  static bool initialized = false;
+  if (!initialized){
+      rgblight_enable();
+      rgblight_mode(4);
+      initialized = 1;
+      activate_layer(_BASE);
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (is_layer_keycode(keycode)) {
     if (record->event.pressed) {
@@ -57,5 +67,26 @@ void matrix_scan_user(void) {
     leader_nkro();
     leader_god();
   }
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  switch (biton32(state)) {
+    case _BASE:
+      rgblight_mode(4);
+      break;
+    case _ALBHED:
+      rgblight_mode(1);
+      rgblight_sethsv(42, 242, 255);
+      break;
+    case _FUNC:
+      rgblight_mode(1);
+      rgblight_sethsv(209, 244, 255);
+      break;
+    case _GOD:
+      rgblight_mode(1);
+      rgblight_sethsv(189, 71, 100);
+      break;
+  }
+  return state;
 }
 /* vim: set nowrap : */
