@@ -36,6 +36,7 @@ if (is_layer_keycode(keycode)) {
 ```
 
 The following table summarizes the available layers:
+
 |
 | Layer enum   | Keycode         | Required macro            | Note                                   |
 |--------------|-----------------|---------------------------|----------------------------------------|
@@ -112,6 +113,61 @@ void foo() {
   enable_nkro(NK_TOGGLE);  /* Toggle NKRO */
 }
 ```
+
+Tapdances
+---------
+The "lock tapdance" is a dance that allows you to lock (and potentially unlock)
+your screen.  Here's how it works:
+
+ * A single tap on the `TD_LOCK` key will initiate a "short lock".
+ * A long (held) tap on the `TD_LOCK` key will initiate a "long lock".
+ * A double tap on the `TD_LOCK` key will unlock the screen in the "short lock"
+   state, but do nothing in the "long lock" state.
+ * After a configurable period of time (60 minutes by default, can be
+   overridden via the `AUTO_LOCK_TIME` macro), "short locks" are automatically
+   upgraded to "long locks".
+
+The motivation behind this is that there are two scenarios where I locked my screen:
+ 1. When I momentarily leave my desk.  For example, I may go fetch a printout
+    or coffee.  In this case I lock the screen just to be sure someone walking
+    by my desk doesn't see something they shouldn't see.  I'm not however
+    particularly worried that someone is going to try to break into the system
+    at my desk, therefore I like a quick and convenient way to unlock my
+    screen.
+ 2. When I leave my desk for an extended length of time - a meeting or
+    overnight, then I don't want my screen to be so easy to unlock.  In that
+    case, I want to have to manually unlock it.
+
+To use this, first define a tap dance dance action:
+
+```
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [TD_LCK]  = ACTION_TAP_DANCE_FN(lock_dance)
+};
+```
+
+Second, in `matrix_scan_user` add a call to `expire_short_lock()`.  This *must*
+be called regularly for "short locks" to be upgraded to "long locks".
+
+Third, you'll likely want to define `AUTO_LOCK_TIME` to a preferred value in
+your "config.h" file or rules.mk.  The value is specified in milliseconds.
+
+Finally, define an implementation for the following function in your "secrets.h" file:
+`static void secret_unlock(void)`
+
+Providing a function `secret_unlock` rather than just an array value gives you
+more control over how you want to perform your unlock - it can be something
+more elaborate than simply sending a string.
+
+!> Caveat - Depending on how the lock/unlock process is implemented, it can
+!> range from mildly insecure to terribly insecure.  What I do is modify my
+!> my screen lock program (xlockmore) to accept a special string, which will
+!> unlock the screen, before authenticating the user account.  The catch
+!> is that this special check is only allowed if the screen has been locked
+!> less than `AUTO_LOCK_TIME`.  This avoids having to place a user credential
+!> in keyboard firmware, at the cost of having to modify the screen lock program.
+!> The end result is a slightly stronger version of the common "screen blank"
+!> that upgrades to a full lock after a certain time.
 
 Secrets
 -------

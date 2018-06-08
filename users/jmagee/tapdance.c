@@ -21,8 +21,8 @@
 #if (__has_include("secrets.h") && !defined(NO_SECRETS))
 #include "secrets.h"
 #else
-static const char *secret_unlock(void) {
-  return "noop";
+static void secret_unlock(void) {
+  /* noop */
 }
 #endif
 
@@ -60,7 +60,7 @@ static void update_lock_state(Lock_t new_state) {
     case Short_lock:
       if (new_state == Unlocked) {
         dprintf("Short_lock -> Unlocked\n");
-        send_string_P(secret_unlock());
+        secret_unlock();
       } else if (new_state == Long_lock) {
         dprintf("Short_lock -> Long_lock\n");
         sl.time_of_lock = timer_read32();
