@@ -2,7 +2,7 @@ SRC += leader.c nkro.c layers.c passert.c mouse.c chord.c
 
 EXTRAFLAGS += -flto
 
-ifeq ($(strip $(NO_SECRETS)), yes)
+ifneq ($(strip $(SECRETS)), yes)
 	OPT_DEFS += -DNO_SECRETS
 endif
 
