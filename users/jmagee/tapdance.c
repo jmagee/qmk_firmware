@@ -27,7 +27,7 @@ static void secret_unlock(void) {
 #endif
 
 #ifndef AUTO_LOCK_TIME
-#define AUTO_LOCK_TIME (60U * 60U * 1000U) /* 1 hour */
+#define AUTO_LOCK_TIME (60U * 60U * (uint32_t)1000U) /* 1 hour */
 #endif
 
 typedef struct {
@@ -36,6 +36,12 @@ typedef struct {
 } locker_t;
 
 static locker_t sl = {Unlocked, 0U};
+
+static void reset_lock_state(void) {
+  dprintf("Reset lock state to unlocked.\n");
+  lock_state_changed_user(Unlocked);
+  sl.screen_lock = Unlocked;
+}
 
 static void update_lock_state(Lock_t new_state) {
   switch (sl.screen_lock) {
@@ -47,6 +53,7 @@ static void update_lock_state(Lock_t new_state) {
         dprintf("Unlocked -> Long_lock\n");
         lock_state_changed_user(new_state);
       } else { /* new_state == Unlocked */
+        dprintf("Noop: Unlocked -> Unlocked\n");
         break;
       }
       chord2(KC_LALT, KC_X);
@@ -63,6 +70,7 @@ static void update_lock_state(Lock_t new_state) {
         lock_state_changed_user(new_state);
         sl.time_of_lock = timer_read32();
       } else { /* new_state = Short_lock */
+        dprintf("Noop: Short_lock -> Short_lock\n");
         break;
       }
       sl.screen_lock = new_state;
@@ -84,11 +92,19 @@ void lock_dance(qk_tap_dance_state_t *state, void *user_data) {
     }
   } else if (state->count == 2) {
     update_lock_state(Unlocked);
+  } else if (state->count == 3) {
+    reset_lock_state();
+  } else if (state->count == 5) {
+    reset_keyboard();
   }
 }
 
 void expire_short_lock(void) {
-  if (timer_elapsed32(sl.time_of_lock) > AUTO_LOCK_TIME) {
+  if (sl.screen_lock == Short_lock &&
+      timer_elapsed32(sl.time_of_lock) > AUTO_LOCK_TIME) {
+    dprintf("Locked at time = %u\n", sl.time_of_lock);
+    dprintf("AutoLock time = %u\n", AUTO_LOCK_TIME);
+    dprintf("Elapsed lock time = %u\n", timer_elapsed32(sl.time_of_lock));
     update_lock_state(Long_lock);
   }
 }

@@ -33,6 +33,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 
 void matrix_init_user(void) {
   static bool initialized = 0;
+  debug_enable = true;
   if (!initialized){
       dprintf("Initializing in matrix_scan_user");
       rgblight_enable();
@@ -96,15 +97,16 @@ void led_set_user(uint8_t usb_led) {
 void lock_state_changed_user(Lock_t lock_state) {
   switch (lock_state) {
     case Unlocked:
-      rgblight_mode(4);
-      rgblight_sethsv(189, 71, 100);
+      rgblight_mode(7);
+      rgblight_sethsv(0,255,255);
+      //rgblight_sethsv(189, 71, 100);
       break;
     case Short_lock:
-      rgblight_mode(1);
+      rgblight_mode(4);
       rgblight_sethsv(43, 186, 255);
       break;
     case Long_lock:
-      rgblight_mode(1);
+      rgblight_mode(4);
       rgblight_sethsv(359, 255, 255);
       break;
   }
