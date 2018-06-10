@@ -37,9 +37,11 @@ void matrix_init_user(void) {
   if (!initialized){
       dprintf("Initializing in matrix_scan_user");
       rgblight_enable();
-      rgblight_mode(7);
-      rgblight_sethsv(0,255,255);
-      rgblight_setrgb(0x00, 0x00, 0xFF);
+      /*rgblight_mode(7);*/
+      /*rgblight_sethsv(0,255,255);*/
+      /*rgblight_setrgb(0x00, 0x00, 0xFF);*/
+      rgblight_mode(1);
+      rgblight_sethsv(189, 71, 100);
       initialized = 1;
     }
 }
@@ -48,58 +50,13 @@ void matrix_scan_user(void) {
   expire_short_lock();
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-  case KC_A:
-    if (record->event.pressed) {
-      SEND_STRING("Howdy!!\n");
-      rgblight_step();
-      return false;
-    }
-  }
-  return true;
-}
-
-void led_set_user(uint8_t usb_led) {
-
-  if (usb_led & (1 << USB_LED_NUM_LOCK)) {
-
-  } else {
-
-  }
-
-  if (usb_led & (1 << USB_LED_CAPS_LOCK)) {
-
-  } else {
-
-  }
-
-  if (usb_led & (1 << USB_LED_SCROLL_LOCK)) {
-
-  } else {
-
-  }
-
-  if (usb_led & (1 << USB_LED_COMPOSE)) {
-
-  } else {
-
-  }
-
-  if (usb_led & (1 << USB_LED_KANA)) {
-
-  } else {
-
-  }
-
-}
-
 void lock_state_changed_user(Lock_t lock_state) {
   switch (lock_state) {
     case Unlocked:
-      rgblight_mode(7);
-      rgblight_sethsv(0,255,255);
-      //rgblight_sethsv(189, 71, 100);
+      rgblight_mode(1);
+      rgblight_sethsv(189, 71, 100);
+      //rgblight_mode(7);
+      //rgblight_sethsv(0,255,255);
       break;
     case Short_lock:
       rgblight_mode(4);
