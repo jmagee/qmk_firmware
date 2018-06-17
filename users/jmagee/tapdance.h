@@ -21,6 +21,12 @@ typedef enum {
   TD_LCK = 0
 } Tapdance_keycodes;
 
+typedef enum {
+  Unlocked,
+  Short_lock,   /* A short lock - this can "auto-unlocked" */
+  Long_lock,    /* Long lock - no choice but to manually unlock via a human */
+} Lock_t;
+
 /* Tap dance routine for locking the screen.
  * 1 Tap: Lock
  * 2 taps: Unlock
@@ -29,3 +35,7 @@ void lock_dance(qk_tap_dance_state_t *state, void *user_data);
 
 /* Upgrade a Short_lock to a Long_lock if a certain amount of time has elapsed. */
 void expire_short_lock(void);
+
+/* Perform side effects on lock state changes.
+ * This is called whenever a lock state changes. */
+void lock_state_changed_user(Lock_t lock_state);

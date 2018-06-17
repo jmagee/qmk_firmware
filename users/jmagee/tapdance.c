@@ -30,12 +30,6 @@ static void secret_unlock(void) {
 #define AUTO_LOCK_TIME (60U * 60U * 1000U) /* 1 hour */
 #endif
 
-typedef enum {
-  Unlocked,
-  Short_lock,   /* A short lock - this can "auto-unlocked" */
-  Long_lock,    /* Long lock - no choice but to manually unlock via a human */
-} Lock_t;
-
 typedef struct {
   Lock_t screen_lock;
   uint32_t time_of_lock;
@@ -48,8 +42,10 @@ static void update_lock_state(Lock_t new_state) {
     case Unlocked:
       if (new_state == Short_lock) {
         dprintf("Unlocked -> Short_lock\n");
+        lock_state_changed_user(new_state);
       } else if (new_state == Long_lock) {
         dprintf("Unlocked -> Long_lock\n");
+        lock_state_changed_user(new_state);
       } else { /* new_state == Unlocked */
         break;
       }
@@ -60,9 +56,11 @@ static void update_lock_state(Lock_t new_state) {
     case Short_lock:
       if (new_state == Unlocked) {
         dprintf("Short_lock -> Unlocked\n");
+        lock_state_changed_user(new_state);
         secret_unlock();
       } else if (new_state == Long_lock) {
         dprintf("Short_lock -> Long_lock\n");
+        lock_state_changed_user(new_state);
         sl.time_of_lock = timer_read32();
       } else { /* new_state = Short_lock */
         break;
@@ -93,4 +91,8 @@ void expire_short_lock(void) {
   if (timer_elapsed32(sl.time_of_lock) > AUTO_LOCK_TIME) {
     update_lock_state(Long_lock);
   }
+}
+
+__attribute__((weak))
+void lock_state_changed_user(Lock_t lock_state) {
 }
