@@ -149,14 +149,18 @@ void matrix_scan_user(void) {
     leader_secret();
     leader_utility();
     leader_nkro();
+    leader_music();
   }
 }
 
 bool music_mask_user(uint16_t keycode) {
   switch (keycode) {
-    default:
-      return true;
+    case KC_SPACE:
+    case KC_TAB:
+      return false;
   }
+
+  return !is_layer_keycode(keycode);
 }
 
 uint32_t layer_state_set_user(uint32_t state) {

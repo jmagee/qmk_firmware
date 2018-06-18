@@ -80,6 +80,8 @@ I make heavy use of leaders.
 |Leader x N    | alt+N           | `leader_xmonad`           | N are numpad digits on a qwerty layer. |
 |Leader flash  | N/A             | `leader_utility`          | Rest the board into flash mode.        |
 |Leader n      | N/A             | `leader_nkro`             | Toggle NKRO on and off.                |
+|Leader spc spc| N/A             | `leader_music`            | Toggle music mode on/off.              |
+|Leader tab tab| N/A             | `leader_music`            | Toggle music mode mode.                |
 
 Mouser
 ------

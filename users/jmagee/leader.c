@@ -175,3 +175,19 @@ void leader_god(void) {
   }
 #endif
 }
+
+#if defined(AUDIO_ENABLE)
+extern bool music_activated;
+#endif
+
+void leader_music(void) {
+#if defined(AUDIO_ENABLE)
+  SEQ_TWO_KEYS(KC_SPACE, KC_SPACE) {
+    music_activated ? music_off() : music_on();
+  }
+
+  SEQ_TWO_KEYS(KC_TAB, KC_TAB) {
+    music_mode_cycle();
+  }
+#endif
+}
