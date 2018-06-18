@@ -60,6 +60,32 @@ For each layer, a "smart toggle" is provided (roughly of the form `T_LAYER`).
 These yield toggle on tap and momentarily activate on hold.  I.e.
 `LT(LAYER, LAYER_KEYCODE)`.
 
+Custom Keycodes
+---------------
+A few custom keycodes are provided, including ones for each layer described above.
+
+Non-layer custom key codes:
+
+| Keycode      | Use                                           |
+|--------------|-----------------------------------------------|
+| `SQUEEK`     | Toggles through mouse acceleration speed.     |
+| `KC_HEX`     | Emit `0x`.                                    |
+
+A function is provided to handle these custom keycodes:
+
+```
+#include "keycodes.h"
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  return process_custom_keycodes(keycode, record);
+}
+```
+
+`process_custom_keycodes` returns `false` if further processing should stop,
+and `true` if further processing should continue.  This function handles layer
+activation as well, so if it is used then the code sample in the layer section
+is not needed.
+
 Leaders
 -------
 I make heavy use of leaders.
