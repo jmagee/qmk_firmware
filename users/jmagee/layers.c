@@ -87,7 +87,9 @@ Layers keycode_to_layer(Custom_keycodes kc) {
 bool process_custom_keycodes(Custom_keycodes keycode, keyrecord_t *record) {
   switch (keycode) {
     case BASE ... END_OF_LAYERS:
-      return true;
+      passert(is_layer_keycode(keycode) && "Not a layer keycode");
+      activate_layer(keycode_to_layer(keycode));
+      return false;
     case SQUEEK:
       /* Toggle through the mouse acceleration speeds. */
       if (record->event.pressed) {

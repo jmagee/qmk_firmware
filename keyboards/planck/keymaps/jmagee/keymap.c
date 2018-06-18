@@ -135,18 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (is_layer_keycode(keycode)) {
-    if (record->event.pressed) {
-      activate_layer(keycode_to_layer(keycode));
-      return false;
-    }
-  }
-
-  if (process_custom_keycodes(keycode, record)) {
-    return false;
-  }
-
-  return true;
+  return process_custom_keycodes(keycode, record);
 }
 
 void matrix_scan_user(void) {
