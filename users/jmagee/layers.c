@@ -74,31 +74,3 @@ void activate_layer(Layers layer) {
   }
   unreachable();
 }
-
-bool is_layer_keycode(Custom_keycodes kc) {
-  return kc >= BASE && kc < END_OF_LAYERS;
-}
-
-Layers keycode_to_layer(Custom_keycodes kc) {
-  passert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
-  return kc - SAFE_RANGE;
-}
-
-bool process_custom_keycodes(Custom_keycodes keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case BASE ... END_OF_LAYERS:
-      passert(is_layer_keycode(keycode) && "Not a layer keycode");
-      activate_layer(keycode_to_layer(keycode));
-      return false;
-    case SQUEEK:
-      /* Toggle through the mouse acceleration speeds. */
-      if (record->event.pressed) {
-        squeek();
-      }
-      return false;
-    case KC_HEX:
-      send_string_P("0x");
-      return false;
-  }
-  return true;
-}

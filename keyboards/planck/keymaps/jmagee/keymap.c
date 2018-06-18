@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "action_layer.h"
 #include "chord.h"
+#include "keycodes.h"
 #include "layers.h"
 #include "leader.h"
 #include "mouse.h"
