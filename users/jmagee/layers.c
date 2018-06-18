@@ -15,6 +15,7 @@
  */
 
 #include "layers.h"
+#include "mouse.h"
 #include "passert.h"
 #include <quantum.h>
 
@@ -81,4 +82,18 @@ bool is_layer_keycode(Custom_keycodes kc) {
 Layers keycode_to_layer(Custom_keycodes kc) {
   passert(kc <= _MAX_LAYER + SAFE_RANGE && "Keycode cannot be converted to layer");
   return kc - SAFE_RANGE;
+}
+
+bool process_custom_keycodes(Custom_keycodes keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case BASE ... END_OF_LAYERS:
+      return true;
+    case SQUEEK:
+      /* Toggle through the mouse acceleration speeds. */
+      if (record->event.pressed) {
+        squeek();
+      }
+      return false;
+  }
+  return true;
 }

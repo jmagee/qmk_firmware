@@ -168,3 +168,8 @@ bool is_layer_keycode(Custom_keycodes kc);
  * pre-condition: is_layer_keycode() must return true.
  */
 Layers keycode_to_layer(Custom_keycodes kc);
+
+/* Process custom keycodes and perform their associated actions.
+ * TODO: Add a _user version of this? */
+bool process_custom_keycodes(Custom_keycodes kc, keyrecord_t *record);
+

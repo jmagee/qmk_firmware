@@ -142,14 +142,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
   }
 
-  switch (keycode) {
-    case SQUEEK:
-      /* Toggle through the mouse acceleration speeds. */
-      if (record->event.pressed) {
-        squeek();
-      }
-      return false;
+  if (process_custom_keycodes(keycode, record)) {
+    return false;
   }
+
   return true;
 }
 
