@@ -93,6 +93,7 @@ typedef enum {
   END_OF_LAYERS, /* Not an actual keycode; must appear after the last layer,
                   * but other custom keycodes may appear after. */
   SQUEEK,
+  KC_HEX,
 } Custom_keycodes;
 
 _Static_assert(BASE - SAFE_RANGE == _BASE, "Keycode cannot be converted to layer.");

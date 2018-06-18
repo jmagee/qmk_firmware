@@ -94,6 +94,9 @@ bool process_custom_keycodes(Custom_keycodes keycode, keyrecord_t *record) {
         squeek();
       }
       return false;
+    case KC_HEX:
+      send_string_P("0x");
+      return false;
   }
   return true;
 }
