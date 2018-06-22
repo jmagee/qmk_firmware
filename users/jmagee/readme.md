@@ -161,15 +161,15 @@ Providing a function `secret_unlock` rather than just an array value gives you
 more control over how you want to perform your unlock - it can be something
 more elaborate than simply sending a string.
 
-!> Caveat - Depending on how the lock/unlock process is implemented, it can
-!> range from mildly insecure to terribly insecure.  What I do is modify my
-!> my screen lock program (xlockmore) to accept a special string, which will
-!> unlock the screen, before authenticating the user account.  The catch
-!> is that this special check is only allowed if the screen has been locked
-!> less than `AUTO_LOCK_TIME`.  This avoids having to place a user credential
-!> in keyboard firmware, at the cost of having to modify the screen lock program.
-!> The end result is a slightly stronger version of the common "screen blank"
-!> that upgrades to a full lock after a certain time.
+Caveat - Depending on how the lock/unlock process is implemented, it can
+range from mildly insecure to terribly insecure.  What I do is modify my
+my screen lock program (xlockmore) to accept a special string, which will
+unlock the screen, before authenticating the user account.  The catch
+is that this special check is only allowed if the screen has been locked
+less than `AUTO_LOCK_TIME`.  This avoids having to place a user credential
+in keyboard firmware, at the cost of having to modify the screen lock program.
+The end result is a slightly stronger version of the common "screen blank"
+that upgrades to a full lock after a certain time.
 
 Secrets
 -------
