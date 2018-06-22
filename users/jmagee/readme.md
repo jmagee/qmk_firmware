@@ -37,7 +37,7 @@ if (is_layer_keycode(keycode)) {
 
 The following table summarizes the available layers:
 
-|
+
 | Layer enum   | Keycode         | Required macro            | Note                                   |
 |--------------|-----------------|---------------------------|----------------------------------------|
 | `_BASE`      | `BASE`          | None - always enabled     | Base layer - probably qwerty           |
