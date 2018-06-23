@@ -5,8 +5,8 @@ Abstract
 --------
 My Planck layout is a QWERTY layout characterized primarily by:
 
- * Modal concept, implementing using layers
- * Heavy use of leader sequences
+ * Modal concept, implementing using layers.
+ * Heavy use of leader sequences.
 
 Modes
 -----
