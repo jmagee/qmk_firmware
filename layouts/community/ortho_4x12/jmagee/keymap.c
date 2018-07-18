@@ -1,4 +1,4 @@
-/* Copyright 2015-2017 Jack Humbert
+/* Copyright 2015-2017 Jack Humbert, 2018 Joshua Magee
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,10 +35,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |NumPad| Sym  | GUI  | Alt  |Space | Tab  |Bksp  |Enter | Comp | Navi |Mouser|AlBhed|
  * `-----------------------------------------------------------------------------------'
  */
-[_BASE] = LAYOUT_planck_grid(
+[_BASE] = LAYOUT_ortho_4x12(
   BASE   , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD,
   ESCTRL,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LOCK,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX,
   T_NUMPAD,T_SYM  , KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  KC_RALT, T_NAVI , T_MOUSE, T_BHED
 ),
 
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_ALBHED] = LAYOUT_planck_grid(
+[_ALBHED] = LAYOUT_ortho_4x12(
   _______, KC_X,    KC_F,    KC_A,    KC_N,    KC_D,    KC_O,    KC_I,    KC_E,    KC_U,    KC_B,    _______,
   _______, KC_Y,    KC_C,    KC_T,    KC_V,    KC_K,    KC_R,    KC_Z,    KC_G,    KC_M,    KC_SCLN, KC_QUOT,
   _______, KC_W,    KC_Q,    KC_L,    KC_J,    KC_P,    KC_H,    KC_S,    KC_COMM, KC_DOT,  KC_SLSH, _______,
@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_NUMPAD] = LAYOUT_planck_grid(
+[_NUMPAD] = LAYOUT_ortho_4x12(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_B   , KC_7,    KC_8,    KC_9,    KC_E   , _______,
   _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, XXXXXXX, KC_A  ,  KC_4,    KC_5,    KC_6,    KC_D   , KC_F   ,
   _______, XXXXXXX, KC_HEX , KC_COMM, KC_DOT , XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_C   , _______,
@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_SYMBOLS] = LAYOUT_planck_grid(
+[_SYMBOLS] = LAYOUT_ortho_4x12(
   _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR , XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_NUBS, _______,
   _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, XXXXXXX,
   _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
@@ -109,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_NAVI] = LAYOUT_planck_grid(
+[_NAVI] = LAYOUT_ortho_4x12(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, XXXXXXX, XXXXXXX, KC_DEL , KC_PGDN, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, XXXXXXX, XXXXXXX,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_MOUSER] = LAYOUT_planck_grid(
+[_MOUSER] = LAYOUT_ortho_4x12(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN3, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, SQUEEK , XXXXXXX, KC_BTN4, KC_BTN1, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
