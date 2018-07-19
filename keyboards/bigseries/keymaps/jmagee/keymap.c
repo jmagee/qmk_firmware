@@ -59,11 +59,11 @@ void lock_state_changed_user(Lock_t lock_state) {
       //rgblight_sethsv(0,255,255);
       break;
     case Short_lock:
-      rgblight_mode(4);
+      rgblight_mode(2);
       rgblight_sethsv(43, 186, 255);
       break;
     case Long_lock:
-      rgblight_mode(4);
+      rgblight_mode(2);
       rgblight_sethsv(359, 255, 255);
       break;
   }
