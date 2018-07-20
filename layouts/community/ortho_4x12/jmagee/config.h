@@ -49,4 +49,8 @@
 #define USE_SYMBOLS_LAYER
 #define USE_MOUSER_LAYER
 
+/* Re-enable tapping, in the case that the default config disables it (e.g. for
+ * Let's Split Vitamins Included. */
+#undef NO_ACTION_TAPPING
+
 #endif

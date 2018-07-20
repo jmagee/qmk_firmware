@@ -36,35 +36,44 @@ void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Layers layer) {
 
 void activate_layer(Layers layer) {
   static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
+  dprintf("activate layer called\n");
   switch (layer) {
     case _BASE:
       print("mode just switched to BASE and this is a huge string\n");
       set_single_persistent_default_layer(_BASE);
       layer_map[_BASE] = Layer_persistant;
+      dprintf("switch to base layer\n");
       return;
 #ifdef USE_ALBHED_LAYER
     case _ALBHED:
       print("Famlusa\n");
       switch_transient_layer(layer_map, _ALBHED);
+      dprintf("switch to albhed layer\n");
       return;
 #endif
 #ifdef USE_NUMPAD_LAYER
     case _NUMPAD:
+      dprintf("switch to numpad layer\n");
 #endif
 #ifdef USE_SYMBOLS_LAYER
     case _SYMBOLS:
+      dprintf("switch to symbol layer\n");
 #endif
 #ifdef USE_NAVI_LAYER
     case _NAVI:
+      dprintf("switch to navi layer\n");
 #endif
 #ifdef USE_MOUSER_LAYER
     case _MOUSER:
+      dprintf("switch to mouser layer\n");
 #endif
 #ifdef USE_FUNC_LAYER
     case _FUNC:
+      dprintf("switch to func layer\n");
 #endif
 #ifdef USE_GOD_LAYER
     case _GOD:
+      dprintf("switch to god layer\n");
 #endif
       switch_transient_layer(layer_map, layer);
       return;
