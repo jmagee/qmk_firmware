@@ -33,8 +33,10 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
   switch (keycode) {
     case BASE ... END_OF_LAYERS:
       passert(is_layer_keycode(keycode) && "Not a layer keycode");
-      activate_layer(keycode_to_layer(keycode));
-      return false;
+      if (record->event.pressed) {
+        activate_layer(keycode_to_layer(keycode));
+        return false;
+      }
     case SQUEEK:
       /* Toggle through the mouse acceleration speeds. */
       if (record->event.pressed) {
@@ -42,8 +44,10 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
       }
       return false;
     case KC_HEX:
-      send_string_P("0x");
-      return false;
+      if (record->event.pressed) {
+        send_string_P("0x");
+        return false;
+      }
   }
   return true;
 }

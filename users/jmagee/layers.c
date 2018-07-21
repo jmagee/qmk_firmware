@@ -42,6 +42,7 @@ void activate_layer(Layers layer) {
       print("mode just switched to BASE and this is a huge string\n");
       set_single_persistent_default_layer(_BASE);
       layer_map[_BASE] = Layer_persistant;
+      transient_layers_off(layer_map);
       dprintf("switch to base layer\n");
       return;
 #ifdef USE_ALBHED_LAYER
