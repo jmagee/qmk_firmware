@@ -30,22 +30,27 @@ Layers keycode_to_layer(Custom_keycode kc) {
 }
 
 bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
+  static uint16_t press_timer = 0;
   switch (keycode) {
     case BASE ... END_OF_LAYERS:
       passert(is_layer_keycode(keycode) && "Not a layer keycode");
       if (record->event.pressed) {
+        press_timer = timer_read();
         activate_layer(keycode_to_layer(keycode));
+        return false;
+      } else if (timer_elapsed(press_timer) >= TAPPING_TERM) {
+        deactivate_layer(keycode_to_layer(keycode));
         return false;
       }
     case SQUEEK:
       /* Toggle through the mouse acceleration speeds. */
       if (record->event.pressed) {
         squeek();
+        return false;
       }
-      return false;
     case KC_HEX:
       if (record->event.pressed) {
-        send_string_P("0x");
+        SEND_STRING("0x");
         return false;
       }
   }

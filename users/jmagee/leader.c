@@ -56,6 +56,7 @@ static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
     if (i < 10) {
       /* F1 - F9 */
       SEQ_TWO_KEYS(leading_key, digits[i]) {
+        print("F1-F9");
         fkey_map(fkeys[f]);
       }
     } else {
@@ -70,6 +71,7 @@ static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
 }
 
 static void ctrl_alt_fkey_map(uint8_t f) {
+  print("Chording ctrl alt fkey\n");
   chord3(KC_LCTRL, KC_LALT, f);
 }
 
@@ -134,10 +136,15 @@ void leader_xmonad(void) {
   }
 
   /* Switch desktops */
+#if 0
   for (uint8_t i = 1; i < 10; ++i) {
     SEQ_TWO_KEYS(KC_X, digits[i]) {
       chord2(KC_LALT, i);
     }
+  }
+#endif
+  SEQ_TWO_KEYS(KC_X, KC_M) {
+    chord2(KC_LALT, KC_1); // next time, try with digits[i] instead of KC_1
   }
 }
 
@@ -157,8 +164,7 @@ void leader_secret(void) {
 
 void leader_utility(void) {
   SEQ_FIVE_KEYS(KC_F, KC_L, KC_A, KC_S, KC_H) {
-    register_code16(RESET);
-    unregister_code16(RESET);
+    reset_keyboard();
   }
 }
 

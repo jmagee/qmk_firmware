@@ -19,6 +19,8 @@
 #include "passert.h"
 #include <quantum.h>
 
+static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
+
 void transient_layers_off(Layer_state layer_map[_MAX_LAYER]) {
   for (Layers i = 0; i < _MAX_LAYER; ++i) {
     if (layer_map[i] == Layer_on) {
@@ -35,7 +37,6 @@ void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Layers layer) {
 }
 
 void activate_layer(Layers layer) {
-  static Layer_state layer_map[_MAX_LAYER] = {Layer_off};
   dprintf("activate layer called\n");
   switch (layer) {
     case _BASE:
@@ -83,4 +84,11 @@ void activate_layer(Layers layer) {
       return;
   }
   unreachable();
+}
+
+void deactivate_layer(Layers layer) {
+  passert(layer_map[layer] == Layer_on && "Layer is not on");
+  layer_off(layer);
+  layer_map[layer] = Layer_off;
+  dprintf("turned off layer %d\n", layer);
 }

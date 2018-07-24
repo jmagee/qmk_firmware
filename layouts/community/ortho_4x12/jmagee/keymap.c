@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   BASE   , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD,
   ESCTRL,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RESET  ,
-  NUMPAD,  SYMBOLS, KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  KC_RALT, NAVI   , MOUSER,  ALBHED
+  SYMBOLS, NUMPAD,  KC_LGUI, KC_LALT, KC_SPC , KC_TAB,  KC_BSPC, KC_ENT,  KC_RALT, NAVI   , MOUSER,  ALBHED
 ),
 
 /* Al Bhed
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |   b  |   7  |   8  |   9  |  e   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  /   |  *   |  -   |  +   |      |   a  |   4  |   5  |   6  |  d   |  f   |
+ * |      |  /   |  *   |  -   |  +   |  %   |   a  |   4  |   5  |   6  |  d   |  f   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |  0x  |  ,   |  .   |      |   0  |   1  |   2  |   3  |  c   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -73,26 +73,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUMPAD] = LAYOUT_ortho_4x12(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_B   , KC_7,    KC_8,    KC_9,    KC_E   , _______,
-  _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, XXXXXXX, KC_A  ,  KC_4,    KC_5,    KC_6,    KC_D   , KC_F   ,
+  _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_A  ,  KC_4,    KC_5,    KC_6,    KC_D   , KC_F   ,
   _______, XXXXXXX, KC_HEX , KC_COMM, KC_DOT , XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_C   , _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 /* Symbols
  * ,-----------------------------------------------------------------------------------.
- * |      |  !   |   @  |  #   |  $   |      |  &   |   [  |  ]   |      |  \   |      |
+ * |      |  !   |   @  |  #   |      |      |  &   |   [  |  ]   |      |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  /   |   *  |  -   |  +   |  %   |   {  |   (  |  )   |  }   |  |   |      |
+ * |      |  /   |   *  |  -   |  +   |  %   |   {  |   (  |  )   |  }   |  |   | tilda|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  _   |  =   |      |      |      |      |      |      |      |
+ * |      |      |      |  _   |  =   |      |      |   ^  |  $   |      | tick |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_SYMBOLS] = LAYOUT_ortho_4x12(
-  _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR , XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_NUBS, _______,
-  _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, XXXXXXX,
-  _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_BSLS, _______,
+  _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, KC_TILD,
+  _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, KC_CIRC, KC_DLR , XXXXXXX, KC_GRV , _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -174,22 +174,28 @@ uint32_t layer_state_set_user(uint32_t state) {
    * currently active layer and displays it. */
   switch (biton32(state)) {
     case _BASE:
-      meh_chord(KC_B);
+      print("Layer: base\n");
+      /*meh_chord(KC_B);*/
       break;
     case _ALBHED:
-      meh_chord(KC_A);
+      /*meh_chord(KC_A);*/
+      print("Layer: albhed\n");
       break;
     case _NUMPAD:
-      meh_chord(KC_N);
+      /*meh_chord(KC_N);*/
+      print("Layer: numpad\n");
       break;
     case _SYMBOLS:
-      meh_chord(KC_S);
+      /*meh_chord(KC_S);*/
+      print("Layer: symbols\n");
       break;
     case _NAVI:
-      meh_chord(KC_V);
+      /*meh_chord(KC_V);*/
+      print("Layer: navi\n");
       break;
     case _MOUSER:
-      meh_chord(KC_M);
+      /*meh_chord(KC_M);*/
+      print("Layer: mouser\n");
       break;
   }
   return state;

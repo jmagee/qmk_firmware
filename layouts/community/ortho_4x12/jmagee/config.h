@@ -40,7 +40,7 @@
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 40
 
 /* Leader key settings */
-#define LEADER_TIMEOUT 300
+#define LEADER_TIMEOUT 800
 
 /* Layer settings */
 #define USE_ALBHED_LAYER
@@ -52,5 +52,7 @@
 /* Re-enable tapping, in the case that the default config disables it (e.g. for
  * Let's Split Vitamins Included. */
 #undef NO_ACTION_TAPPING
+
+#define TAPPING_TERM 100
 
 #endif

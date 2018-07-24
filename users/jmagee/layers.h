@@ -60,7 +60,7 @@ typedef enum {
 } Layer_state;
 
 /* Turn off all transient layers.
- * A transient layer is just a non-persistant layer.
+ * A transient layer is just a non-persistent layer.
  * Only one transient layer can be enabled at a time. */
 void transient_layers_off(Layer_state layer_map[_MAX_LAYER]);
 
@@ -69,3 +69,6 @@ void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Layers layer);
 
 /* Activate a layer. */
 void activate_layer(Layers layer);
+
+/* Deactivate a layer. */
+void deactivate_layer(Layers layer);
