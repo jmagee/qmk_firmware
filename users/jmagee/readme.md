@@ -105,6 +105,8 @@ I make heavy use of leaders.
 |Leader x q    | alt+shift+ctrl+q| `leader_xmonad`           | Quit xmonad.                           |
 |Leader x r    | alt+shift+q     | `leader_xmonad`           | Restart xmonad.                        |
 |Leader x N    | alt+N           | `leader_xmonad`           | N are numpad digits on a qwerty layer. |
+|Leader x N N  | alt+shift+N     | `leader_xmonad`           | N are numpad digits on a qwerty layer. |
+|Leader tab    | alt+tab         | `leader_xmonad`           |                                        |
 |Leader flash  | N/A             | `leader_utility`          | Rest the board into flash mode.        |
 |Leader n      | N/A             | `leader_nkro`             | Toggle NKRO on and off.                |
 |Leader spc spc| N/A             | `leader_music`            | Toggle music mode on/off.              |

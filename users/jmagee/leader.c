@@ -158,6 +158,11 @@ void leader_xmonad(void) {
     chord3(KC_LALT, KC_LSFT, KC_Q);
   }
 
+  /* atl tab */
+  SEQ_ONE_KEY(KC_TAB) {
+    chord2(KC_LALT, KC_TAB);
+  }
+
   /* Switch desktops */
 #if 0
   for (int x = 1; x < 9; ++x) {
