@@ -180,14 +180,14 @@ void leader_xmonad(void) {
 
   /* Send to desktops */
   SEQ_THREE_KEYS(KC_X, digits[1][0], digits[1][0]) { chord3(KC_LALT, KC_LSFT, digits[1][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[2][0], digits[2][0]) { chord2(KC_LALT, KC_LSFT, digits[2][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[3][0], digits[3][0]) { chord2(KC_LALT, KC_LSFT, digits[3][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[4][0], digits[4][0]) { chord2(KC_LALT, KC_LSFT, digits[4][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[5][0], digits[5][0]) { chord2(KC_LALT, KC_LSFT, digits[5][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[6][0], digits[6][0]) { chord2(KC_LALT, KC_LSFT, digits[6][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[7][0], digits[7][0]) { chord2(KC_LALT, KC_LSFT, digits[7][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[8][0], digits[8][0]) { chord2(KC_LALT, KC_LSFT, digits[8][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[9][0], digits[9][0]) { chord2(KC_LALT, KC_LSFT, digits[9][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[2][0], digits[2][0]) { chord3(KC_LALT, KC_LSFT, digits[2][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[3][0], digits[3][0]) { chord3(KC_LALT, KC_LSFT, digits[3][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[4][0], digits[4][0]) { chord3(KC_LALT, KC_LSFT, digits[4][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[5][0], digits[5][0]) { chord3(KC_LALT, KC_LSFT, digits[5][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[6][0], digits[6][0]) { chord3(KC_LALT, KC_LSFT, digits[6][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[7][0], digits[7][0]) { chord3(KC_LALT, KC_LSFT, digits[7][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[8][0], digits[8][0]) { chord3(KC_LALT, KC_LSFT, digits[8][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[9][0], digits[9][0]) { chord3(KC_LALT, KC_LSFT, digits[9][1]); }
 }
 
 void leader_secret(void) {
