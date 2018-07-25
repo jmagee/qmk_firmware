@@ -40,7 +40,6 @@ void activate_layer(Layers layer) {
   dprintf("activate layer called\n");
   switch (layer) {
     case _BASE:
-      print("mode just switched to BASE and this is a huge string\n");
       set_single_persistent_default_layer(_BASE);
       layer_map[_BASE] = Layer_persistant;
       transient_layers_off(layer_map);

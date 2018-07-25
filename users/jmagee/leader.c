@@ -39,9 +39,18 @@ PROGMEM static const uint8_t fkeys[N_FKEYS] = {
   KC_F21, KC_F22, KC_F23, KC_F24
 };
 
-PROGMEM static const uint8_t digits[10] = {
+PROGMEM static const uint8_t digits[10][2] = {
   /* 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 on QWERTY layer */
-  KC_N, KC_M, KC_COMM, KC_DOT, KC_J, KC_K, KC_L, KC_U, KC_I, KC_O
+  {KC_N, KC_0},
+  {KC_M, KC_1},
+  {KC_COMM, KC_2},
+  {KC_DOT, KC_3},
+  {KC_J, KC_4},
+  {KC_K, KC_5},
+  {KC_L, KC_6},
+  {KC_U, KC_7},
+  {KC_I, KC_8},
+  {KC_O, KC_9}
 };
 
 /* Helper to map F-key based sequences to a virtual numpad.
@@ -50,24 +59,38 @@ PROGMEM static const uint8_t digits[10] = {
  * F keys) and does something with it (e.g. register keypress events)
  * */
 static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
+#if 0
   uint8_t f = 0;
 
   for (uint8_t i = 1; i < 25; ++i) {
     if (i < 10) {
       /* F1 - F9 */
-      SEQ_TWO_KEYS(leading_key, digits[i]) {
+      SEQ_TWO_KEYS(leading_key, digits[i][0]) {
         print("F1-F9");
         fkey_map(fkeys[f]);
       }
     } else {
       /* F10 - F24 */
       uint8_t d1 = i < 20 ? 1 : 2;
-      SEQ_THREE_KEYS(leading_key, digits[d1], digits[i % 10]) {
+      SEQ_THREE_KEYS(leading_key, digits[d1][0], digits[i % 10][0]) {
         fkey_map(fkeys[f]);
       }
     }
     ++f;
   }
+#endif
+  SEQ_TWO_KEYS(leading_key, digits[1][0]) { fkey_map(fkeys[1]); }
+  SEQ_TWO_KEYS(leading_key, digits[2][0]) { fkey_map(fkeys[2]); }
+  SEQ_TWO_KEYS(leading_key, digits[3][0]) { fkey_map(fkeys[3]); }
+  SEQ_TWO_KEYS(leading_key, digits[4][0]) { fkey_map(fkeys[4]); }
+  SEQ_TWO_KEYS(leading_key, digits[5][0]) { fkey_map(fkeys[5]); }
+  SEQ_TWO_KEYS(leading_key, digits[6][0]) { fkey_map(fkeys[6]); }
+  SEQ_TWO_KEYS(leading_key, digits[7][0]) { fkey_map(fkeys[7]); }
+  SEQ_TWO_KEYS(leading_key, digits[8][0]) { fkey_map(fkeys[8]); }
+  SEQ_TWO_KEYS(leading_key, digits[9][0]) { fkey_map(fkeys[9]); }
+  SEQ_THREE_KEYS(leading_key, digits[1][0], digits[0][0]) { fkey_map(fkeys[10]); }
+  SEQ_THREE_KEYS(leading_key, digits[1][0], digits[1][0]) { fkey_map(fkeys[11]); }
+  SEQ_THREE_KEYS(leading_key, digits[1][0], digits[2][0]) { fkey_map(fkeys[12]); }
 }
 
 static void ctrl_alt_fkey_map(uint8_t f) {
@@ -137,15 +160,34 @@ void leader_xmonad(void) {
 
   /* Switch desktops */
 #if 0
-  for (uint8_t i = 1; i < 10; ++i) {
-    SEQ_TWO_KEYS(KC_X, digits[i]) {
-      chord2(KC_LALT, i);
+  for (int x = 1; x < 9; ++x) {
+    SEQ_TWO_KEYS(KC_X, digits[x][0]) {
+      chord2(KC_LALT, digits[x][1]);
     }
   }
 #endif
-  SEQ_TWO_KEYS(KC_X, KC_M) {
-    chord2(KC_LALT, KC_1); // next time, try with digits[i] instead of KC_1
-  }
+
+  /* For reasons I have not determined, this code does not work if wrapped in a loop.... */
+  SEQ_TWO_KEYS(KC_X, digits[1][0]) { chord2(KC_LALT, digits[1][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[2][0]) { chord2(KC_LALT, digits[2][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[3][0]) { chord2(KC_LALT, digits[3][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[4][0]) { chord2(KC_LALT, digits[4][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[5][0]) { chord2(KC_LALT, digits[5][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[6][0]) { chord2(KC_LALT, digits[6][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[7][0]) { chord2(KC_LALT, digits[7][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[8][0]) { chord2(KC_LALT, digits[8][1]); }
+  SEQ_TWO_KEYS(KC_X, digits[9][0]) { chord2(KC_LALT, digits[9][1]); }
+
+  /* Send to desktops */
+  SEQ_THREE_KEYS(KC_X, digits[1][0], digits[1][0]) { chord2(KC_LALT, digits[1][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[2][0], digits[2][0]) { chord2(KC_LALT, digits[2][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[3][0], digits[3][0]) { chord2(KC_LALT, digits[3][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[4][0], digits[4][0]) { chord2(KC_LALT, digits[4][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[5][0], digits[5][0]) { chord2(KC_LALT, digits[5][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[6][0], digits[6][0]) { chord2(KC_LALT, digits[6][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[7][0], digits[7][0]) { chord2(KC_LALT, digits[7][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[8][0], digits[8][0]) { chord2(KC_LALT, digits[8][1]); }
+  SEQ_THREE_KEYS(KC_X, digits[9][0], digits[9][0]) { chord2(KC_LALT, digits[9][1]); }
 }
 
 void leader_secret(void) {
