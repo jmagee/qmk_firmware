@@ -54,6 +54,7 @@ typedef enum {
                   * but other custom keycodes may appear after. */
   SQUEEK,
   KC_HEX,
+  KC_READ,       /* Mark as read/undread in Outlook */
 } Custom_keycode;
 
 _Static_assert(BASE - SAFE_RANGE == _BASE, "Keycode cannot be converted to layer.");

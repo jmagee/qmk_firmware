@@ -15,6 +15,7 @@
  */
 
 #include "keycodes.h"
+#include "chord.h"
 #include "layers.h"
 #include "mouse.h"
 #include "passert.h"
@@ -51,6 +52,17 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
     case KC_HEX:
       if (record->event.pressed) {
         SEND_STRING("0x");
+        return false;
+      }
+    case KC_READ:
+      if (record->event.pressed) {
+        if (keyboard_report->mods & MOD_BIT(KC_LCTL)) {
+          /* Read a message in outlook */
+          chord2(KC_LCTRL, KC_Q);
+        } else {
+          /* Un-read a message in outlook */
+          chord2(KC_LCTRL, KC_U);
+        }
         return false;
       }
   }

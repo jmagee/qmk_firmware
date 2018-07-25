@@ -100,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * This doesn't have keys like HOME, END, and others - I never use those.  I'll add them
  * if/when I need them.
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      | PGUP |      |      |      |      |      |      |      |
+ * |      |      |      | READ | PGUP |      |      |UNREAD|      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      | DEL  | PGDN |      |  <-  | Down | Up   |  ->  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -110,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_NAVI] = LAYOUT_ortho_4x12(
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP, XXXXXXX, XXXXXXX, KC_READ, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, XXXXXXX, XXXXXXX, KC_DEL , KC_PGDN, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, XXXXXXX, XXXXXXX,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
