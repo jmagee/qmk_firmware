@@ -118,9 +118,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Mouser.
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |  C3  |      |      |      |      |      |      |      |
+ * |      |      |      |      |  C3  |      |      |WheelU|      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |SQUEEK|      |  C4  |  C1  |      |  <-  | Down | Up   |  ->  |      |      |
+ * |      |SQUEEK|WheelD|  C4  |  C1  |      |  <-  | Down | Up   |  ->  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |  C2  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -128,8 +128,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_MOUSER] = LAYOUT_ortho_4x12(
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN3, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  _______, SQUEEK , XXXXXXX, KC_BTN4, KC_BTN1, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN3, XXXXXXX, XXXXXXX, KC_WH_U, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, SQUEEK , KC_WH_D, KC_BTN4, KC_BTN1, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),

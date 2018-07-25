@@ -16,20 +16,20 @@
  * define the delay between that button press and the mouse cursor moving. Some
  * people find that small movements are impossible if this setting is too low,
  * while settings that are too high feel sluggish. */
-#define MOUSEKEY_DELAY             300
+#define MOUSEKEY_DELAY             200
 
 /* When a movement key is held down this specifies how long to wait between each
  * movement report. Lower settings will translate into an effectively higher mouse
  * speed. */
-#define MOUSEKEY_INTERVAL          50
+#define MOUSEKEY_INTERVAL          25
 
 /* As a movement key is held down the speed of the mouse cursor will increase
  * until it reaches MOUSEKEY_MAX_SPEED. */
-#define MOUSEKEY_MAX_SPEED         10
+#define MOUSEKEY_MAX_SPEED         15
 
 /* How long you want to hold down a movement key for until MOUSEKEY_MAX_SPEED is
  * reached. This controls how quickly your cursor will accelerate. */
-#define MOUSEKEY_TIME_TO_MAX       20
+#define MOUSEKEY_TIME_TO_MAX       10
 
 /* The top speed for scrolling movements. */
 #define MOUSEKEY_WHEEL_MAX_SPEED   8
