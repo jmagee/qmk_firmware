@@ -53,6 +53,7 @@ bool process_leader(uint16_t keycode, keyrecord_t *record) {
     if (leading && timer_elapsed(leader_time) < LEADER_TIMEOUT) {
       leader_sequence[leader_sequence_size] = keycode;
       leader_sequence_size++;
+      leader_time = timer_read();
       return false;
     }
   }
