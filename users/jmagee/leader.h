@@ -65,3 +65,6 @@ void leader_god(void);
 
 /* Enable music mode leader keys */
 void leader_music(void);
+
+/* Enable debug mode */
+void leader_debug(void);

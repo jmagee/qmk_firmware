@@ -139,10 +139,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return process_custom_keycodes(keycode, record);
 }
 
-void matrix_init_user(void) {
-  debug_enable = true;
-}
-
 void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
@@ -155,6 +151,7 @@ void matrix_scan_user(void) {
     leader_utility();
     leader_nkro();
     leader_music();
+    leader_debug();
   }
 }
 

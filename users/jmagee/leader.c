@@ -239,3 +239,14 @@ void leader_music(void) {
   }
 #endif
 }
+
+void leader_debug(void) {
+  SEQ_FIVE_KEYS(KC_D, KC_E, KC_B, KC_U, KC_G) {
+    debug_enable = !debug_enable;
+    if (debug_enable) {
+      print("Debug enabled\n");
+    } else {
+      print("Debug disabled\n");
+    }
+  }
+}

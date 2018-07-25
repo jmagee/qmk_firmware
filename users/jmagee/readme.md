@@ -70,6 +70,7 @@ Non-layer custom key codes:
 |--------------|-----------------------------------------------|
 | `SQUEEK`     | Toggles through mouse acceleration speed.     |
 | `KC_HEX`     | Emit `0x`.                                    |
+| `KC_READ`    | Emit outlooks shortcuts to read/unread emails.|
 
 A function is provided to handle these custom keycodes:
 
@@ -108,6 +109,7 @@ I make heavy use of leaders.
 |Leader n      | N/A             | `leader_nkro`             | Toggle NKRO on and off.                |
 |Leader spc spc| N/A             | `leader_music`            | Toggle music mode on/off.              |
 |Leader tab tab| N/A             | `leader_music`            | Toggle music mode mode.                |
+|Leader debug  | N/A             | `leader_debug`            | Enables/disables kb debug mode.        |
 
 Mouser
 ------
