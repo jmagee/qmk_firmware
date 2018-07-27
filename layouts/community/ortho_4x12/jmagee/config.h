@@ -25,7 +25,7 @@
 
 /* As a movement key is held down the speed of the mouse cursor will increase
  * until it reaches MOUSEKEY_MAX_SPEED. */
-#define MOUSEKEY_MAX_SPEED         15
+#define MOUSEKEY_MAX_SPEED         12
 
 /* How long you want to hold down a movement key for until MOUSEKEY_MAX_SPEED is
  * reached. This controls how quickly your cursor will accelerate. */
