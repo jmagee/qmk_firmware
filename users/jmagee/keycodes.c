@@ -32,17 +32,24 @@ Layers keycode_to_layer(Custom_keycode kc) {
 
 bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
   static uint16_t press_timer = 0;
+  static bool layer_key_pressed = false;
+  static bool block_toggle = false;
   switch (keycode) {
     case BASE ... END_OF_LAYERS:
       passert(is_layer_keycode(keycode) && "Not a layer keycode");
       if (record->event.pressed) {
+        layer_key_pressed = true;
         press_timer = timer_read();
         activate_layer(keycode_to_layer(keycode));
         return false;
-      } else if (timer_elapsed(press_timer) >= TAPPING_TERM) {
+      } else if (block_toggle || timer_elapsed(press_timer) >= TAPPING_TERM) {
+        layer_key_pressed = false;
+        block_toggle = false;
         deactivate_layer(keycode_to_layer(keycode));
         return false;
       }
+      block_toggle = false;
+      layer_key_pressed = false;
     case SQUEEK:
       /* Toggle through the mouse acceleration speeds. */
       if (record->event.pressed) {
@@ -66,5 +73,14 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
         return false;
       }
   }
+  /* If a layer key is pressed at the same time as any other key,
+   * it should be considered a hold and not a tap.  This prevents rapid
+   * layer+key pressed from being considered a tap. */
+  /* TODO: Consider moving this before the switch? */
+  if (layer_key_pressed) {
+    block_toggle = true;
+    dprintf("Blocked toggle\n");
+  }
+
   return true;
 }
