@@ -193,6 +193,11 @@ void leader_xmonad(void) {
   SEQ_THREE_KEYS(KC_X, digits[7][0], digits[7][0]) { chord3(KC_LALT, KC_LSFT, digits[7][1]); }
   SEQ_THREE_KEYS(KC_X, digits[8][0], digits[8][0]) { chord3(KC_LALT, KC_LSFT, digits[8][1]); }
   SEQ_THREE_KEYS(KC_X, digits[9][0], digits[9][0]) { chord3(KC_LALT, KC_LSFT, digits[9][1]); }
+
+  /* Maybe this should be moved to something like leader_windows ?*/
+  SEQ_TWO_KEYS(KC_X, KC_T) {
+    chord2(KC_LGUI, KC_GRV);
+  }
 }
 
 void leader_secret(void) {
