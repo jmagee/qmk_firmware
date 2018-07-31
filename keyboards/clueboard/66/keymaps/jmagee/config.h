@@ -8,3 +8,6 @@
 #define USE_ALBHED_LAYER
 #define USE_FUNC_LAYER
 #define USE_GOD_LAYER
+
+/* Tapping term */
+#define TAPPING_TERM 100
