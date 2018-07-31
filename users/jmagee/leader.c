@@ -209,7 +209,7 @@ void leader_secret(void) {
     send_string_P(secrets[SECRET_D]);
   }
 
-  SEQ_TWO_KEYS(KC_S, KC_S) {
+  SEQ_TWO_KEYS(KC_S, KC_P) {
     send_string_P(secrets[SECRET_P]);
   }
 }
