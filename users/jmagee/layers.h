@@ -52,20 +52,13 @@ typedef enum {
   _MAX_LAYER      /* Not an actual layer; must appear last in the enum. */
 } Layers;
 
-/* Types to manage layer state. */
-typedef enum {
-  Layer_off = 0,
-  Layer_on,
-  Layer_persistant
-} Layer_state;
-
 /* Turn off all transient layers.
  * A transient layer is just a non-persistent layer.
  * Only one transient layer can be enabled at a time. */
-void transient_layers_off(Layer_state layer_map[_MAX_LAYER]);
+void transient_layers_off(void);
 
 /* Switch from one transient layer to another.  This is essentially a mode switch. */
-void switch_transient_layer(Layer_state layer_map[_MAX_LAYER], Layers layer);
+void switch_transient_layer(Layers layer);
 
 /* Activate a layer. */
 void activate_layer(Layers layer);
