@@ -130,7 +130,7 @@ void leader_xmonad(void) {
 
   /* close window */
   SEQ_TWO_KEYS(KC_X, KC_C) {
-    chord2(KC_LALT, KC_C);
+    chord3(KC_LALT, KC_LSFT, KC_C);
   }
 
   /* cycle layout */
