@@ -56,6 +56,6 @@
 
 #undef DISABLE_LEADER
 
-#define TAPPING_TERM 100
+#define TAPPING_TERM 200
 
 #endif
