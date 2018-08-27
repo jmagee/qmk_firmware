@@ -112,6 +112,7 @@ I make heavy use of leaders.
 |Leader n      | N/A             | `leader_nkro`             | Toggle NKRO on and off.                |
 |Leader spc spc| N/A             | `leader_music`            | Toggle music mode on/off.              |
 |Leader tab tab| N/A             | `leader_music`            | Toggle music mode mode.                |
+|Leader click  | N/A             | `leader_debug`            | Toggle faux clicky on/off.             |
 |Leader debug  | N/A             | `leader_debug`            | Enables/disables kb debug mode.        |
 
 Mouser

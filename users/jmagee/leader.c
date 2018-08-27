@@ -236,6 +236,7 @@ void leader_god(void) {
 
 #if defined(AUDIO_ENABLE)
 extern bool music_activated;
+extern bool clicky_enable;
 #endif
 
 void leader_music(void) {
@@ -246,6 +247,10 @@ void leader_music(void) {
 
   SEQ_TWO_KEYS(KC_TAB, KC_TAB) {
     music_mode_cycle();
+  }
+
+  SEQ_FIVE_KEYS(KC_C, KC_L, KC_I, KC_C, KC_K) {
+    clicky_enable = !clicky_enable;
   }
 #endif
 }
