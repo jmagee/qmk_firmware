@@ -159,6 +159,7 @@ bool music_mask_user(uint16_t keycode) {
   switch (keycode) {
     case KC_SPACE:
     case KC_TAB:
+    case KC_LEAD:
       return false;
   }
 
