@@ -790,9 +790,17 @@ void send_consumer(uint16_t data) {
 #ifdef CONSOLE_ENABLE
 
 int8_t sendchar(uint8_t c) {
+  /* Don't block indefinetly.  This works around a (not yet fully understood) bug
+   * where console output blocks indefinetly on Linux.
+   * While this is a workaround for some deeper problem, having a timeout here
+   * may still be better behavior as potentially dropping stuff is better
+   * than deadlocking. */
+  return chnWriteTimeout(&drivers.console_driver.driver, &c, 1, 100);
+#if 0
   // The previous implmentation had timeouts, but I think it's better to just slow down
   // and make sure that everything is transferred, rather than dropping stuff
   return chnWrite(&drivers.console_driver.driver, &c, 1);
+#endif
 }
 
 // Just a dummy function for now, this could be exposed as a weak function
