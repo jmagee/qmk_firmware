@@ -9,8 +9,8 @@
 
     /*#define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND) } */
     #define AUDIO_CLICKY
-    #define AUDIO_CLICKY_FREQ_MIN 400.0f
-    #define AUDIO_CLICKY_FREQ_MAX 500.0f
+    /*#define AUDIO_CLICKY_FREQ_MIN 400.0f*/
+    /*#define AUDIO_CLICKY_FREQ_MAX 500.0f*/
     #define AUDIO_CLICKY_FREQ_RANDOMNESS 0.001f
 #endif
 
