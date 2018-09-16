@@ -11,7 +11,8 @@
     #define AUDIO_CLICKY
     /*#define AUDIO_CLICKY_FREQ_MIN 400.0f*/
     /*#define AUDIO_CLICKY_FREQ_MAX 500.0f*/
-    #define AUDIO_CLICKY_FREQ_RANDOMNESS 0.001f
+    #define AUDIO_CLICKY_FREQ_RANDOMNESS 0.00001f
+    #define AUDIOCLICKY_FURY_ENABLE
 #endif
 
 /* Mouser key settings.  All are specified in ms. */

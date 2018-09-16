@@ -237,6 +237,7 @@ void leader_god(void) {
 #if defined(AUDIO_ENABLE)
 extern bool music_activated;
 extern bool clicky_enable;
+extern bool fury_enable;
 #endif
 
 void leader_music(void) {
@@ -252,6 +253,12 @@ void leader_music(void) {
   SEQ_FIVE_KEYS(KC_C, KC_L, KC_I, KC_C, KC_K) {
     clicky_enable = !clicky_enable;
   }
+
+#ifdef AUDIOCLICKY_FURY_ENABLE
+  SEQ_FOUR_KEYS(KC_F, KC_U, KC_R, KC_Y) {
+    fury_enable = !fury_enable;
+  }
+#endif
 #endif
 }
 
