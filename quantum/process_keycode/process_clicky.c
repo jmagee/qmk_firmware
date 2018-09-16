@@ -19,6 +19,23 @@
 #define AUDIO_CLICKY_FREQ_RANDOMNESS 0.05f
 #endif // !AUDIO_CLICKY_FREQ_RANDOMNESS
 
+#ifdef AUDIOCLICKY_FURY_ENABLE
+#ifdef AUDIO_CLICKY_FURY_ON
+bool fury_enable = true;
+#else // AUDIO_CLICKY_FURY_ON
+bool fury_enable = false;
+#endif // !AUDIO_CLICKY_FURY_ON
+#ifndef AUDIO_CLICKY_FURY_INCREMENT
+#define AUDIO_CLICKY_FURY_INCREMENT 5.0f
+#endif // !AUDIO_CLICKY_FURY_INCREMENT
+#ifndef AUDIO_CLICKY_FURY_CUTOFF
+#define AUDIO_CLICKY_FURY_CUTOFF 200
+#endif // !AUDIO_CLICKY_FURY_CUTOFF
+#ifndef AUDIO_CLICKY_FURY_RESET
+#define AUDIO_CLICKY_FURY_RESET 2500
+#endif // !AUDIO_CLICKY_FURY_CUTOFF
+#endif // !AUDIO_CLICKY_FURY_ENABLE
+
 float clicky_freq = AUDIO_CLICKY_FREQ_DEFAULT;
 float clicky_song[][2]  = {{AUDIO_CLICKY_FREQ_DEFAULT, 3}, {AUDIO_CLICKY_FREQ_DEFAULT, 1}}; // 3 and 1 --> durations
 
@@ -29,12 +46,68 @@ extern bool music_activated;
 extern bool midi_activated;
 #endif // !NO_MUSIC_MODE
 
+#ifdef AUDIOCLICKY_FURY_ENABLE
+static float adjust_clicky_freq(int32_t units) {
+  clicky_freq += (units * AUDIO_CLICKY_FURY_INCREMENT);
+
+  if (clicky_freq > AUDIO_CLICKY_FREQ_MAX) {
+    clicky_freq = AUDIO_CLICKY_FREQ_MAX;
+  }
+
+  if (clicky_freq < AUDIO_CLICKY_FREQ_MIN) {
+    clicky_freq = AUDIO_CLICKY_FREQ_MIN;
+  }
+
+  return clicky_freq;
+}
+#endif
+
+static bool is_clicky_enabled(void) {
+  bool enabled = audio_config.clicky_enable;
+#ifdef AUDIOCLICKY_FURY_ENABLE
+  enabled = enabled || fury_enable;
+#endif
+  return enabled;
+}
+
 void clicky_play(void) {
 #ifndef NO_MUSIC_MODE
   if (music_activated || midi_activated) return;
 #endif // !NO_MUSIC_MODE
-  clicky_song[0][0] = 2.0f * clicky_freq * (1.0f + AUDIO_CLICKY_FREQ_RANDOMNESS * ( ((float)rand()) / ((float)(RAND_MAX)) ) );
-  clicky_song[1][0] = clicky_freq * (1.0f + AUDIO_CLICKY_FREQ_RANDOMNESS * ( ((float)rand()) / ((float)(RAND_MAX)) ) );
+
+#ifdef AUDIOCLICKY_FURY_ENABLE
+  if (fury_enable) {
+    static uint32_t last_click = 0U;
+
+    uint32_t duration = timer_elapsed32(last_click);
+
+    if (duration < (uint32_t)AUDIO_CLICKY_FURY_CUTOFF) {
+      clicky_freq = adjust_clicky_freq(1);
+    } else if (duration < (uint32_t)AUDIO_CLICKY_FURY_RESET) {
+      int32_t ticks = duration / AUDIO_CLICKY_FURY_CUTOFF;
+      clicky_freq = adjust_clicky_freq(ticks * -1);
+    } else {
+      clicky_freq = AUDIO_CLICKY_FREQ_DEFAULT;
+    }
+
+    last_click = timer_read32();
+
+    /* Fury and clicky modes can be combined (allowing some randomness to be
+     * added to the fury.)  If clicky_mode is enabled, then the fury-adjusted
+     * clicky_freq will be used later to create the song.  Otherwise, we need
+     * to create the song here. */
+    if (!clicky_enable) {
+      clicky_song[0][0] = 2.0f * clicky_freq;
+      clicky_song[1][0] = clicky_freq;
+    }
+  } 
+#endif // !AUDIO_CLICKY_FURY_ENABLE
+
+  if (clicky_enable) {
+    clicky_song[0][0] = 2.0f * clicky_freq * (1.0f + AUDIO_CLICKY_FREQ_RANDOMNESS * ( ((float)rand()) / ((float)(RAND_MAX)) ) );
+    clicky_song[1][0] = clicky_freq * (1.0f + AUDIO_CLICKY_FREQ_RANDOMNESS * ( ((float)rand()) / ((float)(RAND_MAX)) ) );
+  }
+
   PLAY_SONG(clicky_song);
 }
 
@@ -80,14 +153,16 @@ bool process_clicky(uint16_t keycode, keyrecord_t *record) {
 
     if (keycode == CLICKY_ENABLE && record->event.pressed) { clicky_on(); }
     if (keycode == CLICKY_DISABLE && record->event.pressed) { clicky_off(); }
-
     if (keycode == CLICKY_RESET && record->event.pressed) { clicky_freq_reset(); }
-
     if (keycode == CLICKY_UP && record->event.pressed) { clicky_freq_up(); }
     if (keycode == CLICKY_DOWN && record->event.pressed) { clicky_freq_down(); }
 
+#ifdef AUDIOCLICKY_FURY_ENABLE
+    if (keycode == CLICKY_FURY_TOGGLE && record->event.pressed) { fury_enable = !fury_enable; }
+#endif
 
-    if ( audio_config.clicky_enable ) {
+
+    if (is_clicky_enabled()) {
       if (record->event.pressed) {
         clicky_play();;
       }

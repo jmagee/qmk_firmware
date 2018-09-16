@@ -147,7 +147,31 @@ You can configure the default, min and max frequencies, the stepping and built i
 | `AUDIO_CLICKY_FREQ_RANDOMNESS`     |  0.05f |  Sets a factor of randomness for the clicks, Setting this to `0f` will make each click identical, and `1.0f` will make this sound much like the 90's computer screen scrolling/typing effect. | 
 
 
+## Faux Click - Fury Mode
+In Fury Mode is an extension to the Faux Click feature.  Instead of a random pitch sound, Fury Mode will gradually adjust the pitch according to your typing speed.  Type quickly and the sounds will increase in pitch; type slowly and the sounds will decrease in pitch.
 
+* `CK_FURY` - Toggles fury mode (will play sound if enabled)
+
+The feature is disabled by default, to save space.  To enable it, add this to your `config.h`:
+    #define AUDIOCLICKY_FURY_ENABLE
+    #define AUDIO_CLICKY
+
+Similar to the `AUDIO_CLICKY` feature, the features is not enabled by default.  You can default it to on with the following:
+    #define AUDIO_CLICKY_ON
+
+You can configure the behavior of fury mode via the following macros:
+
+| Option | Default Value | Description |
+|--------|---------------|-------------|
+#define AUDIO_CLICKY_FURY_INCREMENT 5.0f
+| `AUDIO_CLICKY_FURY_INCREMENT` | 5.0f | Sets the value that the frequency should be increased/decreased by in fury mode. |
+| `AUDIO_CLICKY_FURY_CUTOFF` | 200 | Sets the time in milliseconds used to classify keypresses.  If the duration since the last keypress is less than this value then the audio frequency will increase, otherwise it will decrase. |
+| `AUDIO_CLICKY_FURY_RESET` | 2500 | Sets the time in milliseconds between key presses required for Fury Mode resets to the default frequency.|
+| `AUDIO_CLICKY_FREQ_DEFAULT` | 440.0f | Sets the default/starting audio frequency for the clicky sounds. |
+| `AUDIO_CLICKY_FREQ_MIN` | 65.0f | Sets the lowest frequency (under 60f are a bit buggy). |
+| `AUDIO_CLICKY_FREQ_MAX` | 1500.0f | Sets the the highest frequency. Too high may result in coworkers attacking you. |
+
+Fury Mode can be enabled independently of Faux Clicky.  Enabling both at the same time is supported, in which case the randomness of Faux Clicky is applied after Fury Mode.  This means that a high value of `AUDIO_CLICKY_FREQ_RANDOMNESS` with Faux Clicky will obscure any impact of Fury Mode.
 
 ## MIDI Functionality
 
