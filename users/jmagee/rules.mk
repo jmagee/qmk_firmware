@@ -1,6 +1,7 @@
 SRC += leader.c nkro.c layers.c passert.c mouse.c chord.c keycodes.c
 
 EXTRAFLAGS += -flto
+LEADER_ENABLE = yes
 
 ifneq ($(strip $(SECRETS)), yes)
 	OPT_DEFS += -DNO_SECRETS
