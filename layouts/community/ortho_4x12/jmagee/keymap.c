@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |   Y  |   C  |   T  |   V  |   K  |   R  |   Z  |   G  |   M  |   ;  |  "   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   W  |   Q  |   L  |   J  |   P  |   H  |   S  |   ,  |   .  |   /  |      |
+ * |      |   W  |   Q  |   L  |   J  |   P  |   H  |   S  |   ,  |   .  |   /  |  \   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ALBHED] = LAYOUT_ortho_4x12(
   _______, KC_X,    KC_F,    KC_A,    KC_N,    KC_D,    KC_O,    KC_I,    KC_E,    KC_U,    KC_B,    _______,
   _______, KC_Y,    KC_C,    KC_T,    KC_V,    KC_K,    KC_R,    KC_Z,    KC_G,    KC_M,    KC_SCLN, KC_QUOT,
-  _______, KC_W,    KC_Q,    KC_L,    KC_J,    KC_P,    KC_H,    KC_S,    KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX,
+  _______, KC_W,    KC_Q,    KC_L,    KC_J,    KC_P,    KC_H,    KC_S,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -80,19 +80,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Symbols
  * ,-----------------------------------------------------------------------------------.
- * |      |  !   |   @  |  #   |      |      |  &   |   [  |  ]   |      |  \   |      |
+ * |      |  !   |      |      |      |      |  &   |   [  |  ]   |      |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  /   |   *  |  -   |  +   |  %   |   {  |   (  |  )   |  }   |  |   | tilda|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  _   |  =   |      |      |   ^  |  $   |      | tick |      |
+ * |      |  @   |   #  |  _   |  =   |      |      |   ^  |  $   |      | tick |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_SYMBOLS] = LAYOUT_ortho_4x12(
-  _______, KC_EXLM, KC_AT,   KC_HASH, XXXXXXX, XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_BSLS, _______,
+  _______, KC_EXLM, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_BSLS, _______,
   _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, KC_TILD,
-  _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, KC_CIRC, KC_DLR , XXXXXXX, KC_GRV , XXXXXXX,
+  _______, KC_AT  , KC_HASH, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, KC_CIRC, KC_DLR , XXXXXXX, KC_GRV , XXXXXXX,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
