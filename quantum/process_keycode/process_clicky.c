@@ -55,11 +55,6 @@ static bool is_clicky_enabled(void) {
   return enabled;
 }
 
-/* Resets the clicky frequency to the default value.*/
-static void reset_clicky_freq(void) {
-  clicky_freq = AUDIO_CLICKY_FREQ_DEFAULT;
-}
-
 /* Clip the provided frequency to the range of
  * [AUDIO_CLICKY_FREQ_MIN, AUDIO_CLICKY_FREQ_MAX]. */
 static float clip_clicky_freq(float new_freq) {
@@ -91,7 +86,7 @@ void clicky_play(void) {
       int32_t ticks = duration / AUDIO_CLICKY_FURY_CUTOFF;
       clicky_freq += (ticks * -AUDIO_CLICKY_FURY_INCREMENT);
     } else {
-      reset_clicky_freq();
+      clicky_freq_reset();
     }
 
     last_click = timer_read32();
@@ -101,14 +96,14 @@ void clicky_play(void) {
      * added to the fury.)  If clicky_mode is enabled, then the fury-adjusted
      * clicky_freq will be used later to create the song.  Otherwise, we need
      * to create the song here. */
-    if (!clicky_enable) {
+    if (!audio_config.clicky_enable) {
       clicky_song[0][0] = clip_clicky_freq(2.0f * clicky_freq);
       clicky_song[1][0] = clicky_freq;
     }
   }
 #endif // !AUDIO_CLICKY_FURY_ENABLE
 
-  if (clicky_enable) {
+  if (audio_config.clicky_enable) {
     clicky_song[0][0] = clip_clicky_freq(2.0f * randomize_freq(clicky_freq));
     clicky_song[1][0] = clip_clicky_freq(randomize_freq(clicky_freq));
   }
@@ -164,7 +159,7 @@ bool process_clicky(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef AUDIOCLICKY_FURY_ENABLE
     if (keycode == CLICKY_FURY_TOGGLE && record->event.pressed) {
-      reset_clicky_freq();
+      clicky_freq_reset();
       fury_enable = !fury_enable;
     }
 #endif
