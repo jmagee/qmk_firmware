@@ -19,6 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "layers.h"
 #include "tapdance.h"
 
+static uint32_t mode;
+static uint16_t h;
+static uint8_t s, v;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   LAYOUT(TD(TD_LCK))
 };
@@ -53,18 +57,35 @@ void matrix_scan_user(void) {
 void lock_state_changed_user(Lock_t lock_state) {
   switch (lock_state) {
     case Unlocked:
-      rgblight_mode(1);
-      rgblight_sethsv(189, 71, 100);
-      //rgblight_mode(7);
-      //rgblight_sethsv(0,255,255);
+      mode = 1;
+      h = 189;
+      s = 71;
+      v = 100;
       break;
     case Short_lock:
-      rgblight_mode(2);
-      rgblight_sethsv(43, 186, 255);
+      mode = 2;
+      h = 43;
+      s = 186;
+      v = 255;
       break;
     case Long_lock:
-      rgblight_mode(2);
-      rgblight_sethsv(359, 255, 255);
+      mode = 2;
+      h = 359;
+      s = 255;
+      v = 255;
       break;
   }
+  rgblight_mode(mode);
+  rgblight_sethsv(h, s, v);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+    rgblight_sethsv(296, 39, 255);
+  } else {
+    rgblight_mode(mode);
+    rgblight_sethsv(h, s, v);
+  }
+  return true;
 }
