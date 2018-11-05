@@ -37,6 +37,7 @@ bool fury_enable = false;
 #endif // !AUDIO_CLICKY_FURY_ENABLE
 
 float clicky_freq = AUDIO_CLICKY_FREQ_DEFAULT;
+float clicky_rand = AUDIO_CLICKY_FREQ_RANDOMNESS;
 float clicky_song[][2]  = {{AUDIO_CLICKY_FREQ_DEFAULT, 3}, {AUDIO_CLICKY_FREQ_DEFAULT, 1}}; // 3 and 1 --> durations
 
 extern audio_config_t audio_config;
@@ -67,7 +68,7 @@ static float clip_clicky_freq(float new_freq) {
 }
 
 static float randomize_freq(float freq) {
-  return freq * (1.0 + AUDIO_CLICKY_FREQ_RANDOMNESS * ((float)rand() / (float)RAND_MAX));
+  return freq * (1.0 + clicky_rand * ((float)rand() / (float)RAND_MAX));
 }
 
 void clicky_play(void) {
