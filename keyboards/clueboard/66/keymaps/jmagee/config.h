@@ -11,4 +11,4 @@
 
 /* Tapping term */
 #define LEADER_PER_KEY_TIMING
-#define TAPPING_TERM 100
+#define TAPPING_TERM 200

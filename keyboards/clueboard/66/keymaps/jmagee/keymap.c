@@ -73,7 +73,8 @@ void matrix_scan_user(void) {
 uint32_t layer_state_set_user(uint32_t state) {
   switch (biton32(state)) {
     case _BASE:
-      rgblight_mode(4);
+      /*rgblight_mode(4);*/
+      rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
       break;
     case _ALBHED:
       rgblight_mode(1);
