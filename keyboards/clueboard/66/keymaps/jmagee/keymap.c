@@ -20,9 +20,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Al Bhed. */
 [_ALBHED] = LAYOUT(
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        _______,
-  _______,DE_W,   DE_F,   DE_A,   DE_N,   DE_D,   DE_O,   DE_I,   DE_E,   DE_U,   DE_B,   _______,_______,XXXXXXX,                _______,
+  _______,DE_X,   DE_F,   DE_A,   DE_N,   DE_D,   DE_W,   DE_I,   DE_E,   DE_U,   DE_B,   _______,_______,XXXXXXX,                _______,
   _______,DE_Z,   DE_C,   DE_T,   DE_V,   DE_K,   DE_R,   DE_Y,   DE_G,   DE_M,   _______,_______,_______,_______,
-  _______,_______,DE_W,   DE_Q,   DE_L,   DE_J,   DE_P,   DE_H,   DE_S,   _______,_______,_______,_______,_______,        _______,
+  _______,_______,DE_O,   DE_Q,   DE_L,   DE_J,   DE_P,   DE_H,   DE_S,   _______,_______,_______,_______,_______,        _______,
   _______,_______,_______,_______,        _______,_______,                        _______,_______,_______,BASE   ,_______,_______,_______),
 
 /* Keymap _FL: Function Layer */
@@ -55,7 +55,7 @@ void matrix_init_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-    rgblight_sethsv(rand() % 360, rand() % 255, rand() % 255);
+    rgblight_sethsv(rand() % 360, rand() % 255, 255);
   } else {
     rgblight_mode(mode);
     rgblight_sethsv(h, s, v);
