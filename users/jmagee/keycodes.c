@@ -82,12 +82,12 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
       }
     case KC_READ:
       if (record->event.pressed) {
-        if (keyboard_report->mods & MOD_BIT(KC_LCTL)) {
+        if (get_mods() & MOD_BIT(KC_LCTL)) {
           /* Read a message in outlook */
-          chord2(KC_LCTRL, KC_Q);
+          chord2(KC_RCTRL, KC_Q);
         } else {
           /* Un-read a message in outlook */
-          chord2(KC_LCTRL, KC_U);
+          chord2(KC_RCTRL, KC_U);
         }
         return false;
       }
