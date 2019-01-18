@@ -110,7 +110,6 @@ static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
 }
 
 static void ctrl_alt_fkey_map(uint8_t f) {
-  print("Chording ctrl alt fkey\n");
   chord3(KC_LCTRL, KC_LALT, f);
 }
 
@@ -262,9 +261,9 @@ void leader_debug(void) {
   if (leader_check(KC_D, KC_E, KC_B, KC_U, KC_G)) {
     debug_enable = !debug_enable;
     if (debug_enable) {
-      print("Debug enabled\n");
+      print("Debug on\n");
     } else {
-      print("Debug disabled\n");
+      print("Debug off\n");
     }
   }
 }

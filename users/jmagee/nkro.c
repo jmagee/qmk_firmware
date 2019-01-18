@@ -27,20 +27,19 @@ void enable_nkro(NK_Control mode) {
   switch (mode) {
     case NK_ENABLE:
       keymap_config.nkro = true;
-      print("Enabled NKRO");
       break;
     case NK_DISABLE:
       keymap_config.nkro = false;
-      print("Disabled NKRO");
       break;
     case NK_TOGGLE:
       keymap_config.nkro = !keymap_config.nkro;
-      if (keymap_config.nkro) {
-        print("Enabled NKRO");
-      } else {
-        print("Disabled NKRO");
-      }
       break;
+  }
+
+  if (keymap_config.nkro) {
+    print("NKRO on");
+  } else {
+    print("NKRO off");
   }
   eeconfig_update_keymap(keymap_config.raw);
 }

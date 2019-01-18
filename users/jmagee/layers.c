@@ -39,7 +39,7 @@ void activate_layer(Layers layer) {
     case _BASE:
       set_single_persistent_default_layer(_BASE);
       transient_layers_off();
-      dprintf("return to base layer\n");
+      dprintf("base layer\n");
       return;
 #ifdef USE_ALBHED_LAYER
     case _ALBHED:
@@ -63,18 +63,18 @@ void activate_layer(Layers layer) {
 #ifdef USE_GOD_LAYER
     case _GOD:
 #endif
-      dprintf("turned on layer %d\n", layer);
+      dprintf("layer on: %d\n", layer);
       switch_transient_layer(layer);
       return;
     case _MAX_LAYER:
-      passert(0 && "_MAX_LAYER cannot be activated.");
+      passert(0 && "cannot activate _MAX_LAYER.");
       return;
   }
   unreachable();
 }
 
 void deactivate_layer(Layers layer) {
-  passert(IS_LAYER_ON(layer) && "Layer is not on");
+  passert(IS_LAYER_ON(layer) && "Layer not on");
   layer_off(layer);
-  dprintf("turned off layer %d\n", layer);
+  dprintf("layer off: %d\n", layer);
 }
