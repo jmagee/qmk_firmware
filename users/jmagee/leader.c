@@ -53,32 +53,47 @@ PROGMEM static const uint8_t digits[10][2] = {
   {KC_O, KC_9}
 };
 
+/* Helper function to check the leader sequence.
+ * This is equivalent to the SEQ_*_KEYS macros.  Pulling the functionality
+ * out into a separate function helps reduce code size dramatically. */
+static bool leader_check(uint8_t a, uint8_t b, uint8_t c, uint8_t d, uint8_t e) {
+  if (leader_sequence[0] != a) { return false; }
+  if (leader_sequence[1] != b) { return false; }
+  if (leader_sequence[2] != c) { return false; }
+  if (leader_sequence[3] != d) { return false; }
+  if (leader_sequence[4] != e) { return false; }
+  return true;
+}
+
 /* Helper to map F-key based sequences to a virtual numpad.
  * leader_key is simply a keycode.
  * fkey_map is a function that accepts a keycode argument (one of the
  * F keys) and does something with it (e.g. register keypress events)
  * */
 static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
-#if 0
-  uint8_t f = 0;
+#if 1
+  uint8_t f = 1;
 
   for (uint8_t i = 1; i < 25; ++i) {
     if (i < 10) {
       /* F1 - F9 */
-      SEQ_TWO_KEYS(leading_key, digits[i][0]) {
-        print("F1-F9");
-        fkey_map(fkeys[f]);
+      if (leader_check(leading_key, pgm_read_byte(&(digits[i][0])), 0, 0, 0)) {
+        fkey_map(pgm_read_byte(&(fkeys[f])));
       }
     } else {
       /* F10 - F24 */
       uint8_t d1 = i < 20 ? 1 : 2;
-      SEQ_THREE_KEYS(leading_key, digits[d1][0], digits[i % 10][0]) {
-        fkey_map(fkeys[f]);
+      if (leader_check(leading_key,
+                       pgm_read_byte(&(digits[d1][0])),
+                       pgm_read_byte(&(digits[i % 10])),
+                       0, 0)) {
+        fkey_map(pgm_read_byte(&(fkeys[f])));
       }
     }
     ++f;
   }
 #endif
+#if 0
   SEQ_TWO_KEYS(leading_key, digits[1][0]) { fkey_map(fkeys[1]); }
   SEQ_TWO_KEYS(leading_key, digits[2][0]) { fkey_map(fkeys[2]); }
   SEQ_TWO_KEYS(leading_key, digits[3][0]) { fkey_map(fkeys[3]); }
@@ -91,6 +106,7 @@ static void f1_to_vnumpad(uint8_t leading_key, void (*fkey_map)(uint8_t)) {
   SEQ_THREE_KEYS(leading_key, digits[1][0], digits[0][0]) { fkey_map(fkeys[10]); }
   SEQ_THREE_KEYS(leading_key, digits[1][0], digits[1][0]) { fkey_map(fkeys[11]); }
   SEQ_THREE_KEYS(leading_key, digits[1][0], digits[2][0]) { fkey_map(fkeys[12]); }
+#endif
 }
 
 static void ctrl_alt_fkey_map(uint8_t f) {
@@ -103,7 +119,7 @@ void leader_fkeys(void) {
 }
 
 void leader_ctrl_alt_del(void) {
-  SEQ_THREE_KEYS(KC_C, KC_A, KC_D) {
+  if (leader_check(KC_C, KC_A, KC_D, 0, 0)) {
     chord3(KC_LCTRL, KC_LALT, KC_DELETE);
   }
 }
@@ -114,121 +130,102 @@ void leader_virtual_consoles(void) {
 
 void leader_xmonad(void) {
   /* launch a terminal */
-  SEQ_TWO_KEYS(KC_X, KC_ENT) {
+  if (leader_check(KC_X, KC_ENT, 0, 0, 0)) {
     chord3(KC_LALT, KC_LSFT, KC_ENT);
   }
 
   /* launch a dmenu */
-  SEQ_TWO_KEYS(KC_X, KC_P) {
+  if (leader_check(KC_X, KC_P, 0, 0, 0)) {
     chord2(KC_LALT, KC_P);
   }
 
   /* lock the screen */
-  SEQ_TWO_KEYS(KC_X, KC_X) {
+  if (leader_check(KC_X, KC_X, 0, 0, 0)) {
     chord2(KC_LALT, KC_X);
   }
 
   /* close window */
-  SEQ_TWO_KEYS(KC_X, KC_C) {
+  if (leader_check(KC_X, KC_C, 0, 0, 0)) {
     chord3(KC_LALT, KC_LSFT, KC_C);
   }
 
   /* cycle layout */
-  SEQ_TWO_KEYS(KC_X, KC_SPC) {
+  if (leader_check(KC_X, KC_SPC, 0, 0, 0)) {
     chord2(KC_LALT, KC_SPC);
   }
 
   /* Toggle the status bar (e.g. xmobar or similiar) */
-  SEQ_TWO_KEYS(KC_X, KC_B) {
+  if (leader_check(KC_X, KC_B, 0, 0, 0)) {
     chord2(KC_LALT, KC_B);
   }
 
   /* Start a pomodoro */
-  SEQ_TWO_KEYS(KC_X, KC_D) {
+  if (leader_check(KC_X, KC_D, 0, 0, 0)) {
     chord2(KC_LALT, KC_D);
   }
 
   /* quit */
-  SEQ_TWO_KEYS(KC_X, KC_Q) {
+  if (leader_check(KC_X, KC_Q, 0, 0, 0)) {
     chord4(KC_LALT, KC_LSFT, KC_LCTL, KC_Q);
   }
 
   /* restart */
-  SEQ_TWO_KEYS(KC_X, KC_R) {
+  if (leader_check(KC_X, KC_R, 0, 0, 0)) {
     chord3(KC_LALT, KC_LSFT, KC_Q);
   }
 
   /* atl tab */
-  SEQ_ONE_KEY(KC_TAB) {
+  if (leader_check(KC_TAB, 0, 0, 0, 0)) {
     chord2(KC_LALT, KC_TAB);
   }
 
   /* Switch desktops */
-#if 0
-  for (int x = 1; x < 9; ++x) {
-    SEQ_TWO_KEYS(KC_X, digits[x][0]) {
-      chord2(KC_LALT, digits[x][1]);
+  for (uint8_t i = 1; i <= 9; ++i) {
+    uint8_t lhs = pgm_read_byte(&(digits[i][0])),
+            rhs = pgm_read_byte(&(digits[i][1]));
+    if (leader_check(KC_X, lhs, 0, 0, 0)) {
+      chord2(KC_LALT, rhs);
+    }
+    if (leader_check(KC_X, lhs, lhs, 0, 0)) {
+      chord3(KC_LALT, KC_LSFT, rhs);
     }
   }
-#endif
-
-  /* For reasons I have not determined, this code does not work if wrapped in a loop.... */
-  SEQ_TWO_KEYS(KC_X, digits[1][0]) { chord2(KC_LALT, digits[1][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[2][0]) { chord2(KC_LALT, digits[2][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[3][0]) { chord2(KC_LALT, digits[3][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[4][0]) { chord2(KC_LALT, digits[4][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[5][0]) { chord2(KC_LALT, digits[5][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[6][0]) { chord2(KC_LALT, digits[6][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[7][0]) { chord2(KC_LALT, digits[7][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[8][0]) { chord2(KC_LALT, digits[8][1]); }
-  SEQ_TWO_KEYS(KC_X, digits[9][0]) { chord2(KC_LALT, digits[9][1]); }
-
-  /* Send to desktops */
-  SEQ_THREE_KEYS(KC_X, digits[1][0], digits[1][0]) { chord3(KC_LALT, KC_LSFT, digits[1][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[2][0], digits[2][0]) { chord3(KC_LALT, KC_LSFT, digits[2][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[3][0], digits[3][0]) { chord3(KC_LALT, KC_LSFT, digits[3][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[4][0], digits[4][0]) { chord3(KC_LALT, KC_LSFT, digits[4][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[5][0], digits[5][0]) { chord3(KC_LALT, KC_LSFT, digits[5][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[6][0], digits[6][0]) { chord3(KC_LALT, KC_LSFT, digits[6][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[7][0], digits[7][0]) { chord3(KC_LALT, KC_LSFT, digits[7][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[8][0], digits[8][0]) { chord3(KC_LALT, KC_LSFT, digits[8][1]); }
-  SEQ_THREE_KEYS(KC_X, digits[9][0], digits[9][0]) { chord3(KC_LALT, KC_LSFT, digits[9][1]); }
 
   /* Maybe this should be moved to something like leader_windows ?*/
-  SEQ_TWO_KEYS(KC_X, KC_T) {
+  if (leader_check(KC_X, KC_T, 0, 0, 0)) {
     chord2(KC_LGUI, KC_GRV);
   }
 }
 
 void leader_secret(void) {
-  SEQ_TWO_KEYS(KC_S, KC_W) {
+  if (leader_check(KC_S, KC_W, 0, 0, 0)) {
     send_string_P(secrets[SECRET_W]);
   }
 
-  SEQ_TWO_KEYS(KC_S, KC_D) {
+  if (leader_check(KC_S, KC_D, 0, 0, 0)) {
     send_string_P(secrets[SECRET_D]);
   }
 
-  SEQ_TWO_KEYS(KC_S, KC_P) {
+  if (leader_check(KC_S, KC_P, 0, 0, 0)) {
     send_string_P(secrets[SECRET_P]);
   }
 }
 
 void leader_utility(void) {
-  SEQ_FIVE_KEYS(KC_F, KC_L, KC_A, KC_S, KC_H) {
+  if (leader_check(KC_F, KC_L, KC_A, KC_S, KC_H)) {
     reset_keyboard();
   }
 }
 
 void leader_nkro(void) {
-  SEQ_ONE_KEY(KC_N) {
+  if (leader_check(KC_N, 0, 0, 0, 0)) {
     enable_nkro(NK_TOGGLE);
   }
 }
 
 void leader_god(void) {
 #ifdef USE_GOD_LAYER
-  SEQ_THREE_KEYS(KC_G, KC_O, KC_D) {
+  if (leader_check(KC_G, KC_O, KC_D, 0, 0)) {
     activate_layer(_GOD);
   }
 #endif
@@ -241,20 +238,20 @@ extern bool fury_enable;
 
 void leader_music(void) {
 #if defined(AUDIO_ENABLE)
-  SEQ_TWO_KEYS(KC_SPACE, KC_SPACE) {
+  if (leader_check(KC_SPACE, KC_SPACE, 0, 0, 0)) {
     music_activated ? music_off() : music_on();
   }
 
-  SEQ_TWO_KEYS(KC_TAB, KC_TAB) {
+  if (leader_check(KC_TAB, KC_TAB, 0, 0, 0)) {
     music_mode_cycle();
   }
 
-  SEQ_FIVE_KEYS(KC_C, KC_L, KC_I, KC_C, KC_K) {
+  if (leader_check(KC_C, KC_L, KC_I, KC_C, KC_K)) {
     clicky_toggle();
   }
 
 #ifdef AUDIOCLICKY_FURY_ENABLE
-  SEQ_FOUR_KEYS(KC_F, KC_U, KC_R, KC_Y) {
+  if (leader_check(KC_F, KC_U, KC_R, KC_Y, 0)) {
     fury_enable = !fury_enable;
   }
 #endif
@@ -262,7 +259,7 @@ void leader_music(void) {
 }
 
 void leader_debug(void) {
-  SEQ_FIVE_KEYS(KC_D, KC_E, KC_B, KC_U, KC_G) {
+  if (leader_check(KC_D, KC_E, KC_B, KC_U, KC_G)) {
     debug_enable = !debug_enable;
     if (debug_enable) {
       print("Debug enabled\n");
