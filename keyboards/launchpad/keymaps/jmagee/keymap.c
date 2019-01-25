@@ -1,14 +1,26 @@
 #include QMK_KEYBOARD_H
 #include "keycodes.h"
+#include "tapdance.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   LAYOUT( \
-    KC_X1,      KC_X2, \
-    KC_X3,      KC_X4, \
-    KC_X5,      KC_X6, \
-    KC_X7,      KC_X8  \
+    TD(KC_X1),  TD(KC_X2), \
+    TD(KC_X3),  TD(KC_X4), \
+    TD(KC_X5),  TD(KC_X6), \
+    TD(KC_X7),  TD(KC_X8)  \
   )
+};
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [KC_X1]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X2]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X3]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X4]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X5]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X6]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X7]  = ACTION_TAP_DANCE_FN(x_dance),
+  [KC_X8]  = ACTION_TAP_DANCE_FN(x_dance)
 };
 
 void matrix_init_user(void) {

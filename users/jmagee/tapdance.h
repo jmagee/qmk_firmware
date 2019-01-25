@@ -21,6 +21,19 @@ typedef enum {
   TD_LCK = 0
 } Tapdance_keycodes;
 
+#ifdef  USE_XMONAD_KEYS
+typedef enum {
+  KC_X1 = 0,   /* XMonad desktop switches */
+  KC_X2,
+  KC_X3,
+  KC_X4,
+  KC_X5,
+  KC_X6,
+  KC_X7,
+  KC_X8
+} XTapdance_keycodes;
+#endif
+
 typedef enum {
   Unlocked,
   Short_lock,   /* A short lock - this can "auto-unlocked" */
@@ -32,6 +45,10 @@ typedef enum {
  * 2 taps: Unlock
  * 1 long tap (hold): Lock the screen and don't allow it to be unlocked via 2 taps. */
 void lock_dance(qk_tap_dance_state_t *state, void *user_data);
+
+#ifdef USE_XMONAD_KEYS
+void x_dance(qk_tap_dance_state_t *state, void *user_data);
+#endif
 
 /* Upgrade a Short_lock to a Long_lock if a certain amount of time has elapsed. */
 void expire_short_lock(void);

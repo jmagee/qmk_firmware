@@ -16,6 +16,8 @@
 
 #include "tapdance.h"
 #include "chord.h"
+#include "keycodes.h"
+#include "passert.h"
 #include <quantum.h>
 
 #if (__has_include("secrets.h") && !defined(NO_SECRETS))
@@ -98,6 +100,43 @@ void lock_dance(qk_tap_dance_state_t *state, void *user_data) {
     reset_keyboard();
   }
 }
+
+#ifdef USE_XMONAD_KEYS
+uint8_t x_key_to_n(XTapdance_keycodes kc) {
+  passert(kc >= KC_X1 && kc <= KC_X8 && "Not a 'XMonad' key");
+  switch (kc) {
+  case KC_X1: return KC_1;
+  case KC_X2: return KC_2;
+  case KC_X3: return KC_3;
+  case KC_X4: return KC_4;
+  case KC_X5: return KC_5;
+  case KC_X6: return KC_6;
+  case KC_X7: return KC_7;
+  case KC_X8: return KC_8;
+  default: break;
+  }
+  unreachable();
+  return 0;
+}
+
+void x_dance(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 5) {
+    reset_keyboard();
+    return;
+  }
+
+/*  if (state->keycode < KC_X1 || state->keycode > KC_X8) {*/
+    /*dprintf("x_dance used with unexpected key: %d\n", state->keycode);*/
+    /*return;*/
+  /*}*/
+
+  if (state->count == 1) {
+    chord2(KC_LALT, x_key_to_n(state->keycode));
+  } else if (state->count == 2) {
+    chord3(KC_LALT, KC_LSFT, x_key_to_n(state->keycode));
+  }
+}
+#endif
 
 void expire_short_lock(void) {
   if (sl.screen_lock == Short_lock &&

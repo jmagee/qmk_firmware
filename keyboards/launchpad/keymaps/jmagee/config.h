@@ -10,5 +10,5 @@
 //#define RGBLIGHT_LIMIT_VAL 128
 #endif
 
-#define TAPPING_TERM 500
+#define TAPPING_TERM 200
 #define USE_XMONAD_KEYS

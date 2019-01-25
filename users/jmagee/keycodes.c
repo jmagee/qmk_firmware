@@ -30,25 +30,6 @@ Layers keycode_to_layer(Custom_keycode kc) {
   return kc - SAFE_RANGE;
 }
 
-#ifdef USE_XMONAD_KEYS
-uint8_t x_key_to_n(Custom_keycode kc) {
-  passert(kc >= KC_X1 && kc <= KC_X8 && "Not a 'XMonad' key");
-  switch (kc) {
-  case KC_X1: return KC_1;
-  case KC_X2: return KC_2;
-  case KC_X3: return KC_3;
-  case KC_X4: return KC_4;
-  case KC_X5: return KC_5;
-  case KC_X6: return KC_6;
-  case KC_X7: return KC_7;
-  case KC_X8: return KC_8;
-  default: break;
-  }
-  unreachable();
-  return 0;
-}
-#endif
-
 bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
   static uint16_t press_timer = 0;
   static bool layer_key_pressed = false;
@@ -91,13 +72,6 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
         }
         return false;
       }
-#ifdef USE_XMONAD_KEYS
-    case KC_X1 ... KC_X8:
-      if (record->event.pressed) {
-        chord2(KC_LALT, x_key_to_n(keycode));
-      }
-      return false;
-#endif
   }
   /* If a layer key is pressed at the same time as any other key,
    * it should be considered a hold and not a tap.  This prevents rapid

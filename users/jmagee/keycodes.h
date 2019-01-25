@@ -55,16 +55,6 @@ typedef enum {
   SQUEEK,
   KC_HEX,
   KC_READ,       /* Mark as read/undread in Outlook */
-#ifdef USE_XMONAD_KEYS
-  KC_X1,         /* XMonad desktop switches */
-  KC_X2,
-  KC_X3,
-  KC_X4,
-  KC_X5,
-  KC_X6,
-  KC_X7,
-  KC_X8
-#endif
 } Custom_keycode;
 
 _Static_assert(BASE - SAFE_RANGE == _BASE, "Keycode cannot be converted to layer.");
