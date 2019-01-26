@@ -55,19 +55,26 @@ void matrix_init_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   static uint16_t hi = 0;
   static uint8_t si = 0;
+  static int8_t dh = 1,
+                ds = 1;
   if (record->event.pressed) {
     if (si >= 255) {
-      hi++;
-      si = 0;
+      ds = -1;
+    } else if (si == 0) {
+      ds = 1;
     }
 
     if (hi >= 360) {
-      hi = 0;
+      dh = -1;
+    } else if (hi == 0) {
+      dh = 1;
     }
 
     rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
     //rgblight_sethsv(rand() % 360, rand() % 255, 255);
-    rgblight_sethsv(hi, si++, 255);
+    rgblight_sethsv(hi, si, 255);
+    hi += dh;
+    si += ds;
   } else {
     rgblight_mode(mode);
     rgblight_sethsv(h, s, v);
