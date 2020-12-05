@@ -72,6 +72,16 @@ bool process_custom_keycodes(Custom_keycode keycode, keyrecord_t *record) {
         }
         return false;
       }
+    case KC_ARROW:
+      if (record->event.pressed) {
+        SEND_STRING("->");
+        return false;
+      }
+    case KC_BIND:
+      if (record->event.pressed) {
+        SEND_STRING(">>=");
+        return false;
+      }
   }
   /* If a layer key is pressed at the same time as any other key,
    * it should be considered a hold and not a tap.  This prevents rapid

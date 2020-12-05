@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Symbols
  * ,-----------------------------------------------------------------------------------.
- * |      |  !   |      |      |      |      |  &   |   [  |  ]   |      |  \   |      |
+ * |      |  !   |      |  ->  |  >>= |      |  &   |   [  |  ]   |      |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  /   |   *  |  -   |  +   |  %   |   {  |   (  |  )   |  }   |  |   | tilda|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_SYMBOLS] = LAYOUT_ortho_4x12(
-  _______, KC_EXLM, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_BSLS, _______,
+  _______, KC_EXLM, XXXXXXX, KC_ARROW,KC_BIND, XXXXXXX, KC_AMPR, KC_LBRC, KC_RBRC, XXXXXXX, KC_BSLS, _______,
   _______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_PERC, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE, KC_TILD,
   _______, KC_AT  , KC_HASH, KC_UNDS, KC_EQL , XXXXXXX, XXXXXXX, KC_CIRC, KC_DLR , XXXXXXX, KC_GRV , XXXXXXX,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
