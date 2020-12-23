@@ -66,5 +66,14 @@ void leader_god(void);
 /* Enable music mode leader keys */
 void leader_music(void);
 
+/* Enable RGB leader keys */
+void leader_rgb(void);
+
 /* Enable debug mode */
 void leader_debug(void);
+
+#ifdef RGBLIGHT_ENABLE
+/* FIXME: Move to own file for lights */
+void set_lightmode(uint8_t);
+uint8_t get_lightmode(void);
+#endif

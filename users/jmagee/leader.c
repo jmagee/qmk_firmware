@@ -257,6 +257,66 @@ void leader_music(void) {
 #endif
 }
 
+void leader_rgb(void) {
+#if defined(RGBLIGHT_ENABLE)
+  if (leader_check(KC_L, KC_L, 0, 0, 0)) {
+    rgblight_toggle();
+  }
+
+  if (leader_check(KC_L, KC_SPACE, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_STATIC_LIGHT);
+  }
+
+#if defined(RGBLIGHT_EFFECT_BREATHING)
+  if (leader_check(KC_L, KC_B, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_BREATHING);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_RAINBOW_MOOD)
+  if (leader_check(KC_L, KC_R, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_RAINBOW_MOOD);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_RAINBOW_SWIRL)
+  if sleader_check(KC_L, KC_R, KC_S, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_RAINBOW_SWIRL);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_SNAKE)
+  if (leader_check(KC_L, KC_S, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_SNAKE);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_KNIGHT)
+  if (leader_check(KC_L, KC_K, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_KNIGHT);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_CHRISTMAS)
+  if (leader_check(KC_L, KC_X, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_CHRISTMAS);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_GRADIENT)
+  if (leader_check(KC_L, KC_G, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_STATIC_GRADIENT);
+  }
+#endif
+
+#if defined(RGBLIGHT_EFFECT_TWINKLE)
+  if (leader_check(KC_L, KC_T, 0, 0, 0)) {
+    set_lightmode(RGBLIGHT_MODE_TWINKLE);
+  }
+#endif
+#endif
+}
+
 void leader_debug(void) {
   if (leader_check(KC_D, KC_E, KC_B, KC_U, KC_G)) {
     debug_enable = !debug_enable;
@@ -267,3 +327,16 @@ void leader_debug(void) {
     }
   }
 }
+
+#ifdef RGBLIGHT_ENABLE
+static uint32_t mode;
+
+void set_lightmode(uint8_t x) {
+  mode = x;
+  rgblight_mode(x);
+}
+
+uint8_t get_lightmode(void) {
+  return mode;
+}
+#endif

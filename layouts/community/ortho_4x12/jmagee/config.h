@@ -63,4 +63,17 @@
 #define LEADER_PER_KEY_TIMING
 #define TAPPING_TERM 200
 
+#ifdef RGBLIGHT_ENABLE
+/* If RGBLIGHT is enabled, then enable some - but not all - animations. */
+/*#define RGBLIGHT_ANIMATIONS - all, but takes too much space */
+//#define RGBLIGHT_EFFECT_BREATHING
+//#define RGBLIGHT_EFFECT_CHRISTMAS
+#define RGBLIGHT_EFFECT_KNIGHT
+//#define RGBLIGHT_EFFECT_RAINBOW_MOOD
+//#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+//#define RGBLIGHT_EFFECT_SNAKE
+//#define RGBLIGHT_EFFECT_STATIC_GRADIENT
+#define RGBLIGHT_EFFECT_TWINKLE
+#endif
+
 #endif

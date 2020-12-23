@@ -180,12 +180,13 @@ bool process_clicky(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
 
-#if 0 // merge cruft
+#if 1 // merge cruft
     if (is_clicky_enabled()) {
       if (record->event.pressed) {
         clicky_play();;
       }
-#endif
+    }
+#else
     if (audio_config.enable && audio_config.clicky_enable) {
         if (record->event.pressed) {                       // Leave this separate so it's easier to add upstroke sound
             if (keycode != AU_OFF && keycode != AU_TOG) {  // DO NOT PLAY if audio will be disabled, and causes issuse on ARM
@@ -193,6 +194,7 @@ bool process_clicky(uint16_t keycode, keyrecord_t *record) {
             }
         }
     }
+#endif
     return true;
 }
 

@@ -14,3 +14,7 @@ ifeq ($(strip $(KEYBOARD)), vitamins_included/rev1)
 	AUDIO_ENABLE = no
 	RGBLIGHT_ENABLE = no
 endif
+
+ifeq ($(strip $(KEYBOARD)), keebio/levinson/rev3)
+	RGBLIGHT_ENABLE = yes
+endif

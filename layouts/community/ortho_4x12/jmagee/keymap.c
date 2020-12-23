@@ -22,6 +22,11 @@
 #include "leader.h"
 #include "mouse.h"
 
+#ifdef RGBLIGHT_ENABLE
+static uint16_t h;
+static uint8_t s, v;
+#endif
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -136,6 +141,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef RGBLIGHT_ENABLE
+  static uint16_t hi = 0;
+  static uint8_t si = 0;
+  static int8_t dh = 1,
+                ds = 1;
+  if (record->event.pressed) {
+    if (si >= 255) {
+      ds = -1;
+    } else if (si == 0) {
+      ds = 1;
+    }
+
+    if (hi >= 360) {
+      dh = -1;
+    } else if (hi == 0) {
+      dh = 1;
+    }
+
+    rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+    //rgblight_sethsv(rand() % 360, rand() % 255, 255);
+    rgblight_sethsv(hi, si, 255);
+    hi += dh;
+    si += ds;
+  } else {
+    rgblight_mode(get_lightmode());
+    rgblight_sethsv(h, s, v);
+  }
+#endif
   return process_custom_keycodes(keycode, record);
 }
 
@@ -151,6 +184,7 @@ void matrix_scan_user(void) {
     leader_utility();
     leader_nkro();
     leader_music();
+    leader_rgb();
     leader_debug();
   }
 }
@@ -173,29 +207,57 @@ uint32_t layer_state_set_user(uint32_t state) {
   switch (biton32(state)) {
     case _BASE:
       print("Layer: base\n");
+#ifdef RGBLIGHT_ENABLE
+      /*mode = 1;*/
+      h = 0; s = 255; v = 255;
+#endif
       /*meh_chord(KC_B);*/
       break;
     case _ALBHED:
       /*meh_chord(KC_A);*/
+#ifdef RGBLIGHT_ENABLE
+      /*mode = 1;*/
+      h = 42; s = 255; v = 255;
+#endif
       print("Layer: albhed\n");
       break;
     case _NUMPAD:
       /*meh_chord(KC_N);*/
       print("Layer: numpad\n");
+#ifdef RGBLIGHT_ENABLE
+      /*mode = 1;*/
+      h = 113; s = 200; v = 255;
+#endif
       break;
     case _SYMBOLS:
       /*meh_chord(KC_S);*/
       print("Layer: symbols\n");
+#ifdef RGBLIGHT_ENABLE
+      /*mode = 1;*/
+      h = 209; s = 244; v = 255;
+#endif
       break;
     case _NAVI:
       /*meh_chord(KC_V);*/
       print("Layer: navi\n");
+#ifdef RGBLIGHT_ENABLE
+      /*mode = 1;*/
+      h = 313; s = 242; v = 255;
+#endif
       break;
     case _MOUSER:
       /*meh_chord(KC_M);*/
       print("Layer: mouser\n");
+#ifdef RGBLIGHT_ENABLE
+      /*mode = 1;*/
+      h = 61; s = 207; v = 255;
+#endif
       break;
   }
+#ifdef RGBLIGHT_ENABLE
+  /*rgblight_mode(mode);*/
+  rgblight_sethsv(h, s, v);
+#endif
   return state;
 }
 

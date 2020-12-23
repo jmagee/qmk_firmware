@@ -82,7 +82,7 @@ void lock_state_changed_user(Lock_t lock_state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-    rgblight_sethsv(296, 39, 255);
+    rgblight_sethsv(196, 39, 255);
   } else {
     rgblight_mode(mode);
     rgblight_sethsv(h, s, v);
